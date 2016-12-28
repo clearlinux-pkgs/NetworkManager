@@ -1,0 +1,21 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+dbus-dev
+dbus-dev32
+libgudev-dev
+libgudev-dev32
+iptables
+iptables-dev
+iptables-dev32
+gobject-introspection-dev
+libndp-dev32
+libndp-dev
+ncurses-dev
+ncurses-dev32
+libnl-dev
+libnl-dev32
+nss-lib32
+nss-dev
+readline-dev
+dbus-glib-dev32
+dbus-glib-dev

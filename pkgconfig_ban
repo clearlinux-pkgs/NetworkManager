@@ -1,0 +1,28 @@
+# This file contains pkgconfig build requirements that get picked up
+# but are undesirable. One entry per line, no whitespace.
+QtCore
+audit
+bluez
+gudev-1.0
+jansson
+libndp
+libnewt
+libselinux
+libteamdctl
+mm-glib
+polkit-1.0
+32QtCore
+32audit
+32bluez
+32gudev-1.0
+32jansson
+32libndp
+32libnewt
+32libselinux
+32libteamdctl
+32mm-glib
+32polkit-1.0
+32gnutls
+32libsoup-2.4
+32nss
+32polkit-agent-1

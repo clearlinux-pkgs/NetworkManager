@@ -1,0 +1,10 @@
+--- NetworkManager-1.4.2/libnm/nm-client.c~	2016-09-30 15:56:08.000000000 +0000
++++ NetworkManager-1.4.2/libnm/nm-client.c	2016-12-29 15:48:43.813166574 +0000
+@@ -476,6 +476,7 @@
+ NMConnectivityState
+ nm_client_get_connectivity (NMClient *client)
+ {
++	return NM_CONNECTIVITY_FULL;
+ 	g_return_val_if_fail (NM_IS_CLIENT (client), NM_CONNECTIVITY_UNKNOWN);
+ 
+ 	return nm_manager_get_connectivity (NM_CLIENT_GET_PRIVATE (client)->manager);

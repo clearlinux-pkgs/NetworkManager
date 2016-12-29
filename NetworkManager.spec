@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.4.2
-Release  : 2
+Release  : 3
 URL      : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -65,6 +65,7 @@ BuildRequires : pkgconfig(polkit-agent-1)
 BuildRequires : pkgconfig(systemd)
 BuildRequires : pkgconfig(uuid)
 BuildRequires : readline-dev
+Patch1: spoof-online.patch
 
 %description
 ******************
@@ -166,13 +167,14 @@ locales components for the NetworkManager package.
 
 %prep
 %setup -q -n NetworkManager-1.4.2
+%patch1 -p1
 pushd ..
 cp -a NetworkManager-1.4.2 build32
 popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1482977454
+export SOURCE_DATE_EPOCH=1483026964
 %configure --disable-static --disable-ppp \
 --disable-polkit-agent \
 --disable-wifi \

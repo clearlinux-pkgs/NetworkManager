@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.4.2
-Release  : 1
+Release  : 2
 URL      : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -172,7 +172,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1482961783
+export SOURCE_DATE_EPOCH=1482977454
 %configure --disable-static --disable-ppp \
 --disable-polkit-agent \
 --disable-wifi \
@@ -239,9 +239,9 @@ popd
 
 %files data
 %defattr(-,root,root,-)
-%exclude /usr/share/dbus-1/system-services/org.freedesktop.NetworkManager.service
-%exclude /usr/share/dbus-1/system-services/org.freedesktop.nm_dispatcher.service
 %exclude /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
+/usr/share/dbus-1/system-services/org.freedesktop.NetworkManager.service
+/usr/share/dbus-1/system-services/org.freedesktop.nm_dispatcher.service
 
 %files dev
 %defattr(-,root,root,-)

@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.4.2
-Release  : 4
+Release  : 5
 URL      : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -174,7 +174,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1483026964
+export SOURCE_DATE_EPOCH=1491326102
 %configure --disable-static --disable-ppp \
 --disable-polkit-agent \
 --disable-wifi \
@@ -193,10 +193,11 @@ export LDFLAGS="$LDFLAGS -m32"
 --disable-wifi \
 --disable-teamdctl \
 --without-libsoup \
---with-nmcli=no  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+--with-nmcli=no   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 %install
+export SOURCE_DATE_EPOCH=1491326102
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -212,8 +213,6 @@ popd
 
 %files
 %defattr(-,root,root,-)
-%exclude /usr/lib32/NetworkManager/libnm-device-plugin-adsl.so
-%exclude /usr/lib32/NetworkManager/libnm-settings-plugin-ibft.so
 %exclude /usr/lib32/girepository-1.0/NM-1.0.typelib
 %exclude /usr/lib32/girepository-1.0/NMClient-1.0.typelib
 %exclude /usr/lib32/girepository-1.0/NetworkManager-1.0.typelib
@@ -241,6 +240,12 @@ popd
 
 %files data
 %defattr(-,root,root,-)
+%exclude /usr/lib64/girepository-1.0/NM-1.0.typelib
+%exclude /usr/lib64/girepository-1.0/NMClient-1.0.typelib
+%exclude /usr/lib64/girepository-1.0/NetworkManager-1.0.typelib
+%exclude /usr/share/gir-1.0/NM-1.0.gir
+%exclude /usr/share/gir-1.0/NMClient-1.0.gir
+%exclude /usr/share/gir-1.0/NetworkManager-1.0.gir
 %exclude /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
 /usr/share/dbus-1/system-services/org.freedesktop.NetworkManager.service
 /usr/share/dbus-1/system-services/org.freedesktop.nm_dispatcher.service
@@ -393,18 +398,12 @@ popd
 %exclude /usr/include/libnm/nm-vpn-plugin-old.h
 %exclude /usr/include/libnm/nm-vpn-service-plugin.h
 %exclude /usr/include/libnm/nm-wimax-nsp.h
-%exclude /usr/lib64/girepository-1.0/NM-1.0.typelib
-%exclude /usr/lib64/girepository-1.0/NMClient-1.0.typelib
-%exclude /usr/lib64/girepository-1.0/NetworkManager-1.0.typelib
 %exclude /usr/lib64/libnm-glib-vpn.so
 %exclude /usr/lib64/pkgconfig/NetworkManager.pc
 %exclude /usr/lib64/pkgconfig/libnm-glib-vpn.pc
 %exclude /usr/lib64/pkgconfig/libnm-glib.pc
 %exclude /usr/lib64/pkgconfig/libnm-util.pc
 %exclude /usr/lib64/pkgconfig/libnm.pc
-%exclude /usr/share/gir-1.0/NM-1.0.gir
-%exclude /usr/share/gir-1.0/NMClient-1.0.gir
-%exclude /usr/share/gir-1.0/NetworkManager-1.0.gir
 /usr/lib64/libnm-glib.so
 /usr/lib64/libnm-util.so
 /usr/lib64/libnm.so
@@ -699,6 +698,8 @@ popd
 
 %files lib32
 %defattr(-,root,root,-)
+%exclude /usr/lib32/NetworkManager/libnm-device-plugin-adsl.so
+%exclude /usr/lib32/NetworkManager/libnm-settings-plugin-ibft.so
 %exclude /usr/lib32/libnm-glib-vpn.so.1
 %exclude /usr/lib32/libnm-glib-vpn.so.1.2.0
 /usr/lib32/libnm-glib.so.4

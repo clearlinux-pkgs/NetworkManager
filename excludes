@@ -167,9 +167,6 @@
 /usr/lib32/pkgconfig/32libnm.pc
 /usr/lib32/pkgconfig/NetworkManager.pc
 /usr/lib32/pkgconfig/libnm-glib-vpn.pc
-/usr/lib32/pkgconfig/libnm-glib.pc
-/usr/lib32/pkgconfig/libnm-util.pc
-/usr/lib32/pkgconfig/libnm.pc
 /usr/lib64/NetworkManager/libnm-device-plugin-adsl.so
 /usr/lib64/NetworkManager/libnm-settings-plugin-ibft.so
 /usr/lib64/girepository-1.0/NM-1.0.typelib

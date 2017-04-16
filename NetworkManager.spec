@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.4.2
-Release  : 7
+Release  : 8
 URL      : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.4/NetworkManager-1.4.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -174,7 +174,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1492321133
+export SOURCE_DATE_EPOCH=1492357608
 %configure --disable-static --disable-ppp \
 --disable-polkit-agent \
 --disable-wifi \
@@ -197,7 +197,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1492321133
+export SOURCE_DATE_EPOCH=1492357608
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -399,11 +399,11 @@ popd
 %exclude /usr/include/libnm/nm-vpn-service-plugin.h
 %exclude /usr/include/libnm/nm-wimax-nsp.h
 %exclude /usr/lib64/libnm-glib-vpn.so
-%exclude /usr/lib64/pkgconfig/NetworkManager.pc
 %exclude /usr/lib64/pkgconfig/libnm-glib-vpn.pc
 /usr/lib64/libnm-glib.so
 /usr/lib64/libnm-util.so
 /usr/lib64/libnm.so
+/usr/lib64/pkgconfig/NetworkManager.pc
 /usr/lib64/pkgconfig/libnm-glib.pc
 /usr/lib64/pkgconfig/libnm-util.pc
 /usr/lib64/pkgconfig/libnm.pc

@@ -1,6 +1,6 @@
 --disable-ppp
 --disable-polkit-agent
---disable-wifi
 --disable-teamdctl
---without-libsoup
 --with-nmcli=no
+--disable-json-validation
+PYTHON=/usr/bin/python3

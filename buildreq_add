@@ -19,3 +19,6 @@ nss-dev
 readline-dev
 dbus-glib-dev32
 dbus-glib-dev
+pygobject
+libsoup-dev
+libsoup-dev32

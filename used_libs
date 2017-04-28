@@ -17,9 +17,13 @@ libnss3.so
 libnssutil3.so
 libplc4.so
 libplds4.so
+libpolkit-agent-1.so.0
+libpolkit-gobject-1.so.0
 libpthread.so.0
+libreadline.so.7
 libsmime3.so
 libsoup-2.4.so.1
 libssl3.so
 libsystemd.so.0
+libtinfow.so.6
 libuuid.so.1

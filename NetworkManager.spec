@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.6.2
-Release  : 10
+Release  : 11
 URL      : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -186,10 +186,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1493389522
+export SOURCE_DATE_EPOCH=1493392571
 %configure --disable-static --disable-ppp \
 --disable-teamdctl \
---with-nmcli=no \
+--with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
 --with-dist-version="Clear Linux Software for Intel Architecture" \
@@ -218,7 +218,7 @@ export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 %configure --disable-static --disable-ppp \
 --disable-teamdctl \
---with-nmcli=no \
+--with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
 --with-dist-version="Clear Linux Software for Intel Architecture" \
@@ -261,7 +261,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1493389522
+export SOURCE_DATE_EPOCH=1493392571
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -274,6 +274,12 @@ fi
 popd
 %make_install
 %find_lang NetworkManager
+## make_install_append content
+pushd %{buildroot}/usr/lib/systemd/system
+ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
+ln -s NetworkManager-dispatcher.service dbus-org.freedesktop.nm-dispatcher.service
+popd
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -289,6 +295,7 @@ popd
 %defattr(-,root,root,-)
 /usr/bin/NetworkManager
 /usr/bin/nm-online
+/usr/bin/nmcli
 /usr/libexec/nm-dhcp-helper
 /usr/libexec/nm-dispatcher
 /usr/libexec/nm-iface-helper
@@ -299,6 +306,8 @@ popd
 /usr/lib/systemd/system/NetworkManager-dispatcher.service
 /usr/lib/systemd/system/NetworkManager-wait-online.service
 /usr/lib/systemd/system/NetworkManager.service
+/usr/lib/systemd/system/dbus-org.freedesktop.NetworkManager.service
+/usr/lib/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
 /usr/lib/udev/rules.d/84-nm-drivers.rules
 /usr/lib/udev/rules.d/85-nm-unmanaged.rules
 
@@ -307,6 +316,7 @@ popd
 /usr/lib64/girepository-1.0/NM-1.0.typelib
 /usr/lib64/girepository-1.0/NMClient-1.0.typelib
 /usr/lib64/girepository-1.0/NetworkManager-1.0.typelib
+/usr/share/bash-completion/completions/nmcli
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.AccessPoint.xml
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.AgentManager.xml
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.Checkpoint.xml

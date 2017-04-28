@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.6.2
-Release  : 9
+Release  : 10
 URL      : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -17,10 +17,12 @@ Requires: NetworkManager-lib
 Requires: NetworkManager-data
 Requires: NetworkManager-doc
 Requires: NetworkManager-locales
+Requires: dhcp
 BuildRequires : dbus-dev
 BuildRequires : dbus-dev32
 BuildRequires : dbus-glib-dev
 BuildRequires : dbus-glib-dev32
+BuildRequires : dhcp
 BuildRequires : docbook-xml
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
@@ -55,10 +57,12 @@ BuildRequires : pkgconfig(32libnl-3.0)
 BuildRequires : pkgconfig(32libsystemd)
 BuildRequires : pkgconfig(32systemd)
 BuildRequires : pkgconfig(32uuid)
+BuildRequires : pkgconfig(bluez)
 BuildRequires : pkgconfig(dbus-1)
 BuildRequires : pkgconfig(dbus-glib-1)
 BuildRequires : pkgconfig(gio-unix-2.0)
 BuildRequires : pkgconfig(gnutls)
+BuildRequires : pkgconfig(gudev-1.0)
 BuildRequires : pkgconfig(libnl-3.0)
 BuildRequires : pkgconfig(libsoup-2.4)
 BuildRequires : pkgconfig(libsystemd)
@@ -69,6 +73,7 @@ BuildRequires : pkgconfig(uuid)
 BuildRequires : pygobject
 BuildRequires : readline-dev
 Patch1: spoof-online.patch
+Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
 
 %description
 ******************
@@ -171,6 +176,7 @@ locales components for the NetworkManager package.
 %prep
 %setup -q -n NetworkManager-1.6.2
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a NetworkManager-1.6.2 build32
 popd
@@ -180,12 +186,28 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1493299517
+export SOURCE_DATE_EPOCH=1493389522
 %configure --disable-static --disable-ppp \
---disable-polkit-agent \
 --disable-teamdctl \
 --with-nmcli=no \
 --disable-json-validation \
+--with-config-plugins-default=keyfile \
+--with-dist-version="Clear Linux Software for Intel Architecture" \
+--with-dhclient=/usr/bin/dhclient \
+--with-session-tracking=systemd \
+--with-suspend-resume=systemd \
+--with-systemd-logind=yes \
+--with-systemd-journal=yes \
+--enable-modify-system \
+--disable-ppp \
+--enable-polkit-agent \
+--enable-polkit=yes \
+--with-kernel-firmware-dir=/usr/lib/firmware \
+--with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+--enable-wifi \
+--enable-bluez5-dun \
+--with-system-ca-path=/usr/share/ca-certs \
+--with-iptables=/usr/bin/iptables \
 PYTHON=/usr/bin/python3
 make V=1  %{?_smp_mflags}
 
@@ -195,15 +217,51 @@ export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 %configure --disable-static --disable-ppp \
---disable-polkit-agent \
 --disable-teamdctl \
 --with-nmcli=no \
 --disable-json-validation \
-PYTHON=/usr/bin/python3   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+--with-config-plugins-default=keyfile \
+--with-dist-version="Clear Linux Software for Intel Architecture" \
+--with-dhclient=/usr/bin/dhclient \
+--with-session-tracking=systemd \
+--with-suspend-resume=systemd \
+--with-systemd-logind=yes \
+--with-systemd-journal=yes \
+--enable-modify-system \
+--disable-ppp \
+--enable-polkit-agent \
+--enable-polkit=yes \
+--with-kernel-firmware-dir=/usr/lib/firmware \
+--with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+--enable-wifi \
+--enable-bluez5-dun \
+--with-system-ca-path=/usr/share/ca-certs \
+--with-iptables=/usr/bin/iptables \
+PYTHON=/usr/bin/python3 --disable-ppp \
+--disable-teamdctl \
+--with-nmcli=no \
+--disable-json-validation \
+--with-config-plugins-default=keyfile \
+--with-dist-version="Clear Linux Software for Intel Architecture" \
+--with-dhclient=/usr/bin/dhclient \
+--with-session-tracking=systemd \
+--with-suspend-resume=systemd \
+--with-systemd-logind=yes \
+--with-systemd-journal=yes \
+--enable-modify-system \
+--disable-ppp \
+--disable-polkit-agent \
+--enable-polkit=disabled \
+--with-kernel-firmware-dir=/usr/lib/firmware \
+--with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+--enable-wifi \
+--with-system-ca-path=/usr/share/ca-certs \
+--with-iptables=/usr/bin/iptables \
+PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1493299517
+export SOURCE_DATE_EPOCH=1493389522
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -219,9 +277,9 @@ popd
 
 %files
 %defattr(-,root,root,-)
-%exclude /usr/lib32/girepository-1.0/NM-1.0.typelib
-%exclude /usr/lib32/girepository-1.0/NMClient-1.0.typelib
-%exclude /usr/lib32/girepository-1.0/NetworkManager-1.0.typelib
+/usr/lib32/girepository-1.0/NM-1.0.typelib
+/usr/lib32/girepository-1.0/NMClient-1.0.typelib
+/usr/lib32/girepository-1.0/NetworkManager-1.0.typelib
 
 %files autostart
 %defattr(-,root,root,-)
@@ -229,24 +287,23 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/NetworkManager
-%exclude /usr/bin/nm-online
-%exclude /usr/libexec/nm-dhcp-helper
-%exclude /usr/libexec/nm-dispatcher
-%exclude /usr/libexec/nm-iface-helper
+/usr/bin/NetworkManager
+/usr/bin/nm-online
+/usr/libexec/nm-dhcp-helper
+/usr/libexec/nm-dispatcher
+/usr/libexec/nm-iface-helper
 
 %files config
 %defattr(-,root,root,-)
-%exclude /usr/lib/systemd/system/NetworkManager-dispatcher.service
-%exclude /usr/lib/systemd/system/NetworkManager-wait-online.service
-%exclude /usr/lib/systemd/system/NetworkManager.service
 %exclude /usr/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service
-%exclude /usr/lib/udev/rules.d/84-nm-drivers.rules
-%exclude /usr/lib/udev/rules.d/85-nm-unmanaged.rules
+/usr/lib/systemd/system/NetworkManager-dispatcher.service
+/usr/lib/systemd/system/NetworkManager-wait-online.service
+/usr/lib/systemd/system/NetworkManager.service
+/usr/lib/udev/rules.d/84-nm-drivers.rules
+/usr/lib/udev/rules.d/85-nm-unmanaged.rules
 
 %files data
 %defattr(-,root,root,-)
-%exclude /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
 /usr/lib64/girepository-1.0/NM-1.0.typelib
 /usr/lib64/girepository-1.0/NMClient-1.0.typelib
 /usr/lib64/girepository-1.0/NetworkManager-1.0.typelib
@@ -290,12 +347,13 @@ popd
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.xml
 /usr/share/dbus-1/system-services/org.freedesktop.NetworkManager.service
 /usr/share/dbus-1/system-services/org.freedesktop.nm_dispatcher.service
+/usr/share/dbus-1/system.d/nm-dispatcher.conf
+/usr/share/dbus-1/system.d/org.freedesktop.NetworkManager.conf
 /usr/share/gir-1.0/*.gir
+/usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/lib64/libnm-glib-vpn.so
-%exclude /usr/lib64/pkgconfig/libnm-glib-vpn.pc
 /usr/include/NetworkManager/NetworkManager.h
 /usr/include/NetworkManager/NetworkManagerVPN.h
 /usr/include/NetworkManager/nm-connection.h
@@ -445,51 +503,48 @@ popd
 /usr/include/libnm/nm-vpn-plugin-old.h
 /usr/include/libnm/nm-vpn-service-plugin.h
 /usr/include/libnm/nm-wimax-nsp.h
+/usr/lib64/libnm-glib-vpn.so
 /usr/lib64/libnm-glib.so
 /usr/lib64/libnm-util.so
 /usr/lib64/libnm.so
 /usr/lib64/pkgconfig/NetworkManager.pc
+/usr/lib64/pkgconfig/libnm-glib-vpn.pc
 /usr/lib64/pkgconfig/libnm-glib.pc
 /usr/lib64/pkgconfig/libnm-util.pc
 /usr/lib64/pkgconfig/libnm.pc
 
 %files dev32
 %defattr(-,root,root,-)
-%exclude /usr/lib32/libnm-glib-vpn.so
-%exclude /usr/lib32/pkgconfig/32NetworkManager.pc
-%exclude /usr/lib32/pkgconfig/32libnm-glib-vpn.pc
-%exclude /usr/lib32/pkgconfig/32libnm-glib.pc
-%exclude /usr/lib32/pkgconfig/32libnm-util.pc
-%exclude /usr/lib32/pkgconfig/32libnm.pc
-%exclude /usr/lib32/pkgconfig/NetworkManager.pc
-%exclude /usr/lib32/pkgconfig/libnm-glib-vpn.pc
+/usr/lib32/libnm-glib-vpn.so
 /usr/lib32/libnm-glib.so
 /usr/lib32/libnm-util.so
 /usr/lib32/libnm.so
+/usr/lib32/pkgconfig/32NetworkManager.pc
+/usr/lib32/pkgconfig/32libnm-glib-vpn.pc
+/usr/lib32/pkgconfig/32libnm-glib.pc
+/usr/lib32/pkgconfig/32libnm-util.pc
+/usr/lib32/pkgconfig/32libnm.pc
+/usr/lib32/pkgconfig/NetworkManager.pc
+/usr/lib32/pkgconfig/libnm-glib-vpn.pc
 /usr/lib32/pkgconfig/libnm-glib.pc
 /usr/lib32/pkgconfig/libnm-util.pc
 /usr/lib32/pkgconfig/libnm.pc
 
 %files doc
 %defattr(-,root,root,-)
-%exclude /usr/share/doc/NetworkManager/examples/server.conf
-%exclude /usr/share/man/man1/nm-online.1
-%exclude /usr/share/man/man1/nmcli.1
-%exclude /usr/share/man/man1/nmtui.1
-%exclude /usr/share/man/man5/NetworkManager.conf.5
-%exclude /usr/share/man/man5/nm-settings-keyfile.5
-%exclude /usr/share/man/man5/nm-settings.5
-%exclude /usr/share/man/man5/nm-system-settings.conf.5
-%exclude /usr/share/man/man7/nmcli-examples.7
-%exclude /usr/share/man/man8/NetworkManager.8
+%doc /usr/share/doc/NetworkManager/*
+%doc /usr/share/man/man1/*
+%doc /usr/share/man/man5/*
+%doc /usr/share/man/man7/*
+%doc /usr/share/man/man8/*
 
 %files lib
 %defattr(-,root,root,-)
-%exclude /usr/lib64/NetworkManager/libnm-device-plugin-adsl.so
-%exclude /usr/lib64/NetworkManager/libnm-settings-plugin-ibft.so
-%exclude /usr/lib64/libnm-glib-vpn.so.1
-%exclude /usr/lib64/libnm-glib-vpn.so.1.2.0
+/usr/lib64/NetworkManager/libnm-device-plugin-adsl.so
 /usr/lib64/NetworkManager/libnm-device-plugin-wifi.so
+/usr/lib64/NetworkManager/libnm-settings-plugin-ibft.so
+/usr/lib64/libnm-glib-vpn.so.1
+/usr/lib64/libnm-glib-vpn.so.1.2.0
 /usr/lib64/libnm-glib.so.4
 /usr/lib64/libnm-glib.so.4.9.0
 /usr/lib64/libnm-util.so.2
@@ -499,11 +554,11 @@ popd
 
 %files lib32
 %defattr(-,root,root,-)
-%exclude /usr/lib32/NetworkManager/libnm-device-plugin-adsl.so
-%exclude /usr/lib32/NetworkManager/libnm-settings-plugin-ibft.so
-%exclude /usr/lib32/libnm-glib-vpn.so.1
-%exclude /usr/lib32/libnm-glib-vpn.so.1.2.0
+/usr/lib32/NetworkManager/libnm-device-plugin-adsl.so
 /usr/lib32/NetworkManager/libnm-device-plugin-wifi.so
+/usr/lib32/NetworkManager/libnm-settings-plugin-ibft.so
+/usr/lib32/libnm-glib-vpn.so.1
+/usr/lib32/libnm-glib-vpn.so.1.2.0
 /usr/lib32/libnm-glib.so.4
 /usr/lib32/libnm-glib.so.4.9.0
 /usr/lib32/libnm-util.so.2

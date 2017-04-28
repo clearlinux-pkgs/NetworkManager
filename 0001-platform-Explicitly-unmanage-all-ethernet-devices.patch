@@ -1,0 +1,43 @@
+From bfbb0570eef334343c82e53d4e489c3fb1ad42f6 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Fri, 28 Apr 2017 14:54:52 +0100
+Subject: [PATCH] platform: Explicitly unmanage all ethernet devices
+
+This patch changes Network Manager to not manage any ethernet devices on
+Clear Linux, as they are all managed by systemd-networkd. Furthermore,
+the installation process configures systemd-networkd when not using
+dhcp.
+
+NetworkManager is provided for non-ethernet within Clear Linux, such as
+for WiFi connections.
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ src/platform/nm-linux-platform.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/platform/nm-linux-platform.c b/src/platform/nm-linux-platform.c
+index 2c5f089..e73c170 100644
+--- a/src/platform/nm-linux-platform.c
++++ b/src/platform/nm-linux-platform.c
+@@ -4353,11 +4353,17 @@ link_get_unmanaged (NMPlatform *platform, int ifindex, gboolean *unmanaged)
+ 	NMLinuxPlatformPrivate *priv = NM_LINUX_PLATFORM_GET_PRIVATE (platform);
+ 	const NMPObject *link;
+ 	GUdevDevice *udev_device = NULL;
++	NMLinkType type = nm_platform_link_get_type (platform, ifindex);
+ 
+ 	link = nmp_cache_lookup_link (priv->cache, ifindex);
+ 	if (link)
+ 		udev_device = link->_link.udev.device;
+ 
++	if (type == NM_LINK_TYPE_ETHERNET) {
++		*unmanaged = TRUE;
++		return TRUE;
++	}
++
+ 	if (udev_device && g_udev_device_get_property (udev_device, "NM_UNMANAGED")) {
+ 		*unmanaged = g_udev_device_get_property_as_boolean (udev_device, "NM_UNMANAGED");
+ 		return TRUE;
+-- 
+2.12.2
+

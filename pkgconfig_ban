@@ -2,15 +2,12 @@
 # but are undesirable. One entry per line, no whitespace.
 QtCore
 audit
-bluez
-gudev-1.0
 jansson
 libndp
 libnewt
 libselinux
 libteamdctl
 mm-glib
-polkit-1.0
 32QtCore
 32audit
 32bluez

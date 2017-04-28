@@ -11,12 +11,11 @@
 --with-systemd-journal=yes
 --enable-modify-system
 --disable-ppp
---enable-polkit-agent
---enable-polkit=yes
+--disable-polkit-agent
+--enable-polkit=disabled
 --with-kernel-firmware-dir=/usr/lib/firmware
 --with-dbus-sys-dir=/usr/share/dbus-1/system.d
 --enable-wifi
---enable-bluez5-dun
 --with-system-ca-path=/usr/share/ca-certs
 --with-iptables=/usr/bin/iptables
 PYTHON=/usr/bin/python3

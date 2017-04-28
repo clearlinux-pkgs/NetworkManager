@@ -1,0 +1,5 @@
+# Ensure dbus activation will work without requiring enable at boot
+pushd %{buildroot}/usr/lib/systemd/system
+ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
+ln -s NetworkManager-dispatcher.service dbus-org.freedesktop.nm-dispatcher.service
+popd

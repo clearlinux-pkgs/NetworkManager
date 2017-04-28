@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.6.2
-Release  : 11
+Release  : 12
 URL      : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -186,7 +186,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1493392571
+export SOURCE_DATE_EPOCH=1493394210
 %configure --disable-static --disable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -261,7 +261,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1493392571
+export SOURCE_DATE_EPOCH=1493394210
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

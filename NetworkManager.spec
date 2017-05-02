@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.6.2
-Release  : 14
+Release  : 15
 URL      : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Summary  : System for maintaining active network connection

@@ -23,3 +23,7 @@ mm-glib
 32libsoup-2.4
 32nss
 32polkit-agent-1
+32libelogind
+32libpsl
+libpsl
+libelogind

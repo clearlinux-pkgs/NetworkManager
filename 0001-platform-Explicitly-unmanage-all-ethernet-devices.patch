@@ -1,7 +1,7 @@
-From bfbb0570eef334343c82e53d4e489c3fb1ad42f6 Mon Sep 17 00:00:00 2001
+From 8e960042f94768dfe12a1839f446685c91f7b501 Mon Sep 17 00:00:00 2001
 From: Ikey Doherty <michael.i.doherty@intel.com>
 Date: Fri, 28 Apr 2017 14:54:52 +0100
-Subject: [PATCH] platform: Explicitly unmanage all ethernet devices
+Subject: [PATCH 1/2] platform: Explicitly unmanage all ethernet devices
 
 This patch changes Network Manager to not manage any ethernet devices on
 Clear Linux, as they are all managed by systemd-networkd. Furthermore,
@@ -39,5 +39,5 @@ index 2c5f089..e73c170 100644
  		*unmanaged = g_udev_device_get_property_as_boolean (udev_device, "NM_UNMANAGED");
  		return TRUE;
 -- 
-2.12.2
+2.13.0
 

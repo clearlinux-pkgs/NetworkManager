@@ -1,0 +1,40 @@
+From 68a97dc3dfdec28223e0a121166a766a5b8e0e71 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Thu, 11 May 2017 12:48:11 +0100
+Subject: [PATCH 2/2] settings: Ensure the keyfile storage directory actually
+ exists
+
+When first trying to write out the connections we need to ensure that the
+keyfile directory exists, as the /etc/ tree may be either stateless or
+reset initially.
+
+Creating the directory on demand ensures that we have a chance for our
+writes to actually work.
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ src/settings/plugins/keyfile/nms-keyfile-writer.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/settings/plugins/keyfile/nms-keyfile-writer.c b/src/settings/plugins/keyfile/nms-keyfile-writer.c
+index 95897db..9a339c1 100644
+--- a/src/settings/plugins/keyfile/nms-keyfile-writer.c
++++ b/src/settings/plugins/keyfile/nms-keyfile-writer.c
+@@ -204,6 +204,14 @@ _internal_write_connection (NMConnection *connection,
+ 	if (!data)
+ 		return FALSE;
+ 
++
++	/* Ensure the storage directory exists before commiting to writing the
++	 * keyfile out
++	 */
++	if (!g_file_test (keyfile_dir, G_FILE_TEST_IS_DIR )) {
++		g_mkdir_with_parents (keyfile_dir, 00755 );
++	}
++
+ 	/* If we have existing file path, use it. Else generate one from
+ 	 * connection's ID.
+ 	 */
+-- 
+2.13.0
+

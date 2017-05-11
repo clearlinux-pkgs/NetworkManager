@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.6.2
-Release  : 15
+Release  : 16
 URL      : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.6/NetworkManager-1.6.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -18,6 +18,7 @@ Requires: NetworkManager-data
 Requires: NetworkManager-doc
 Requires: NetworkManager-locales
 Requires: dhcp
+Requires: network-manager-applet
 Requires: wpa_supplicant
 BuildRequires : dbus-dev
 BuildRequires : dbus-dev32
@@ -75,6 +76,7 @@ BuildRequires : pygobject
 BuildRequires : readline-dev
 Patch1: spoof-online.patch
 Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
+Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 
 %description
 ******************
@@ -178,6 +180,7 @@ locales components for the NetworkManager package.
 %setup -q -n NetworkManager-1.6.2
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a NetworkManager-1.6.2 build32
 popd
@@ -187,7 +190,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1493436255
+export SOURCE_DATE_EPOCH=1494505137
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -269,7 +272,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1493436255
+export SOURCE_DATE_EPOCH=1494505137
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

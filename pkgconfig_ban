@@ -27,3 +27,7 @@ mm-glib
 32libpsl
 libpsl
 libelogind
+32QtDBus
+32QtNetwork
+QtDBus
+QtNetwork

@@ -1,0 +1,58 @@
+Configure miss: /etc/redhat-release
+Configure miss: /etc/fedora-release
+Configure miss: /etc/mandriva-release
+Configure miss: /etc/SuSE-release
+Configure miss: /etc/debian_version
+Configure miss: /etc/gentoo-release
+Configure miss: whether to build with code coverage support
+Configure miss: QT
+Configure miss: SELINUX
+Configure miss: LIBAUDIT
+Configure miss: JANSSON
+Configure miss: LIBTEAMDCTL
+Configure miss: pppd
+Configure miss: MM_GLIB
+Configure miss: dhcpcd
+Configure miss: dnsmasq
+Configure miss: LIBPSL
+Configure miss: readline.h usability
+Configure miss: readline.h presence
+Configure miss: readline.h
+Configure miss: history.h usability
+Configure miss: history.h presence
+Configure miss: history.h
+Configure miss: NEWT
+Configure miss: whether -Wunknown-warning-option works as expected
+Configure miss: whether -Wunknown-attributes works as expected
+Configure miss: whether -Wtypedef-redefinition works as expected
+Configure miss: whether -Wparentheses-equality works as expected
+Configure miss: whether -Wmissing-braces works as expected
+Configure miss: i686-generic-linux-gnu-objdump
+Configure miss: i686-generic-linux-gnu-dlltool
+Configure miss: i686-generic-linux-gnu-strip
+Configure miss: i686-generic-linux-gnu-mt
+Configure miss: /etc/redhat-release
+Configure miss: /etc/fedora-release
+Configure miss: /etc/mandriva-release
+Configure miss: /etc/SuSE-release
+Configure miss: /etc/debian_version
+Configure miss: /etc/gentoo-release
+Configure miss: whether to build with code coverage support
+Configure miss: i686-generic-linux-gnu-pkg-config
+Configure miss: QT
+Configure miss: SELINUX
+Configure miss: LIBAUDIT
+Configure miss: JANSSON
+Configure miss: LIBTEAMDCTL
+Configure miss: pppd
+Configure miss: MM_GLIB
+Configure miss: dhcpcd
+Configure miss: dnsmasq
+Configure miss: LIBPSL
+Configure miss: NEWT
+Configure miss: whether -Wunknown-warning-option works as expected
+Configure miss: whether -Wunknown-attributes works as expected
+Configure miss: whether -Wtypedef-redefinition works as expected
+Configure miss: whether -Wparentheses-equality works as expected
+Configure miss: whether -Wmissing-braces works as expected
+Configure miss: i686-generic-linux-gnu-nm

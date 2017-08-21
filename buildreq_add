@@ -2,8 +2,6 @@
 # picked up automatically. One name per line, no whitespace.
 dbus-dev
 dbus-dev32
-libgudev-dev
-libgudev-dev32
 iptables
 iptables-dev
 iptables-dev32

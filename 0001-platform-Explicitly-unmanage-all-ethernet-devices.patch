@@ -1,4 +1,4 @@
-From 8e960042f94768dfe12a1839f446685c91f7b501 Mon Sep 17 00:00:00 2001
+From 4c0fba04231af44e4bcfef28881d8377fd8f0be3 Mon Sep 17 00:00:00 2001
 From: Ikey Doherty <michael.i.doherty@intel.com>
 Date: Fri, 28 Apr 2017 14:54:52 +0100
 Subject: [PATCH 1/2] platform: Explicitly unmanage all ethernet devices
@@ -12,32 +12,37 @@ NetworkManager is provided for non-ethernet within Clear Linux, such as
 for WiFi connections.
 
 Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+
+---
+Rebased to NetworkManager-1.8.0
+
+Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
 ---
  src/platform/nm-linux-platform.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/src/platform/nm-linux-platform.c b/src/platform/nm-linux-platform.c
-index 2c5f089..e73c170 100644
+index 252f054..0554ea6 100644
 --- a/src/platform/nm-linux-platform.c
 +++ b/src/platform/nm-linux-platform.c
-@@ -4353,11 +4353,17 @@ link_get_unmanaged (NMPlatform *platform, int ifindex, gboolean *unmanaged)
- 	NMLinuxPlatformPrivate *priv = NM_LINUX_PLATFORM_GET_PRIVATE (platform);
+@@ -4397,11 +4397,17 @@ link_get_unmanaged (NMPlatform *platform, int ifindex, gboolean *unmanaged)
  	const NMPObject *link;
- 	GUdevDevice *udev_device = NULL;
-+	NMLinkType type = nm_platform_link_get_type (platform, ifindex);
+ 	struct udev_device *udevice = NULL;
+ 	const char *uproperty;
++ 	NMLinkType type = nm_platform_link_get_type (platform, ifindex);
  
  	link = nmp_cache_lookup_link (priv->cache, ifindex);
- 	if (link)
- 		udev_device = link->_link.udev.device;
+ 	if (!link)
+ 		return FALSE;
  
-+	if (type == NM_LINK_TYPE_ETHERNET) {
-+		*unmanaged = TRUE;
-+		return TRUE;
++ 	if (type == NM_LINK_TYPE_ETHERNET) {
++ 		*unmanaged = TRUE;
++ 		return TRUE;
 +	}
 +
- 	if (udev_device && g_udev_device_get_property (udev_device, "NM_UNMANAGED")) {
- 		*unmanaged = g_udev_device_get_property_as_boolean (udev_device, "NM_UNMANAGED");
- 		return TRUE;
+ 	udevice = link->_link.udev.device;
+ 	if (!udevice)
+ 		return FALSE;
 -- 
-2.13.0
+2.14.1
 

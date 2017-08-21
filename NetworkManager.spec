@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.8.0
-Release  : 21
+Release  : 22
 URL      : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.0.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.0.tar.xz
 Summary  : System for maintaining active network connection

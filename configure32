@@ -3,7 +3,6 @@
 --with-nmcli=no
 --disable-json-validation
 --with-config-plugins-default=keyfile
---with-dist-version="Clear Linux Software for Intel Architecture"
 --with-dhclient=/usr/bin/dhclient
 --with-session-tracking=systemd
 --with-suspend-resume=systemd

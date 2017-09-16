@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.8.4
-Release  : 25
+Release  : 26
 URL      : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Summary  : System for maintaining active network connection
@@ -210,7 +210,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-dbus-sys-dir=/usr/share/dbus-1/system.d \
 --enable-wifi \
 --enable-bluez5-dun \
---with-system-ca-path=/usr/share/ca-certs \
+--with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 PYTHON=/usr/bin/python3
 make V=1  %{?_smp_mflags}
@@ -238,7 +238,7 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-dbus-sys-dir=/usr/share/dbus-1/system.d \
 --enable-wifi \
 --enable-bluez5-dun \
---with-system-ca-path=/usr/share/ca-certs \
+--with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 PYTHON=/usr/bin/python3 --disable-ppp \
 --disable-teamdctl \
@@ -257,13 +257,13 @@ PYTHON=/usr/bin/python3 --disable-ppp \
 --with-kernel-firmware-dir=/usr/lib/firmware \
 --with-dbus-sys-dir=/usr/share/dbus-1/system.d \
 --enable-wifi \
---with-system-ca-path=/usr/share/ca-certs \
+--with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1506467163
+export SOURCE_DATE_EPOCH=1505534737
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

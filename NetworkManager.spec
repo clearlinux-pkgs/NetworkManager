@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.8.4
-Release  : 24
+Release  : 25
 URL      : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Summary  : System for maintaining active network connection
@@ -184,7 +184,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505940638
+export SOURCE_DATE_EPOCH=1506467163
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -197,7 +197,6 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
---with-dist-version="Clear Linux Software for Intel Architecture" \
 --with-dhclient=/usr/bin/dhclient \
 --with-session-tracking=systemd \
 --with-suspend-resume=systemd \
@@ -226,7 +225,6 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
---with-dist-version="Clear Linux Software for Intel Architecture" \
 --with-dhclient=/usr/bin/dhclient \
 --with-session-tracking=systemd \
 --with-suspend-resume=systemd \
@@ -247,7 +245,6 @@ PYTHON=/usr/bin/python3 --disable-ppp \
 --with-nmcli=no \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
---with-dist-version="Clear Linux Software for Intel Architecture" \
 --with-dhclient=/usr/bin/dhclient \
 --with-session-tracking=systemd \
 --with-suspend-resume=systemd \
@@ -266,7 +263,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1505940638
+export SOURCE_DATE_EPOCH=1506467163
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

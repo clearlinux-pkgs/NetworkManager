@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.8.4
-Release  : 26
+Release  : 27
 URL      : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.4.tar.xz
 Summary  : System for maintaining active network connection
@@ -146,7 +146,6 @@ doc components for the NetworkManager package.
 Summary: lib components for the NetworkManager package.
 Group: Libraries
 Requires: NetworkManager-data
-Requires: NetworkManager-config
 
 %description lib
 lib components for the NetworkManager package.
@@ -156,7 +155,6 @@ lib components for the NetworkManager package.
 Summary: lib32 components for the NetworkManager package.
 Group: Default
 Requires: NetworkManager-data
-Requires: NetworkManager-config
 
 %description lib32
 lib32 components for the NetworkManager package.
@@ -184,7 +182,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1506467163
+export SOURCE_DATE_EPOCH=1510706890
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -263,7 +261,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1505534737
+export SOURCE_DATE_EPOCH=1510706890
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

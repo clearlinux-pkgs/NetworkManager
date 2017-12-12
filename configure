@@ -18,4 +18,5 @@
 --enable-bluez5-dun
 --with-system-ca-path=/var/cache/ca-certs/anchors
 --with-iptables=/usr/bin/iptables
+--disable-ovs
 PYTHON=/usr/bin/python3

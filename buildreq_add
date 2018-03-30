@@ -21,3 +21,4 @@ pygobject
 libsoup-dev
 libsoup-dev32
 dhcp
+jansson-dev

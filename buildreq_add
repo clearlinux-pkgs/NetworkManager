@@ -22,3 +22,4 @@ libsoup-dev
 libsoup-dev32
 dhcp
 jansson-dev
+linux-firmware-wifi

@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.10.6
-Release  : 33
+Release  : 34
 URL      : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.6.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.6.tar.xz
 Summary  : System for maintaining active network connection
@@ -185,7 +185,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525655653
+export SOURCE_DATE_EPOCH=1525700557
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -198,7 +198,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
---with-dhclient=/usr/bin/dhclient \
+--with-dhclient=/usr/libexec/dhclient \
 --with-session-tracking=systemd \
 --with-suspend-resume=systemd \
 --with-systemd-logind=yes \
@@ -227,7 +227,7 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-nmcli=yes \
 --disable-json-validation \
 --with-config-plugins-default=keyfile \
---with-dhclient=/usr/bin/dhclient \
+--with-dhclient=/usr/libexec/dhclient \
 --with-session-tracking=systemd \
 --with-suspend-resume=systemd \
 --with-systemd-logind=yes \
@@ -266,7 +266,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1525655653
+export SOURCE_DATE_EPOCH=1525700557
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

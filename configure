@@ -3,7 +3,7 @@
 --with-nmcli=yes
 --disable-json-validation
 --with-config-plugins-default=keyfile
---with-dhclient=/usr/bin/dhclient
+--with-dhclient=/usr/libexec/dhclient
 --with-session-tracking=systemd
 --with-suspend-resume=systemd
 --with-systemd-logind=yes

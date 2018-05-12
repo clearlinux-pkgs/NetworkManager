@@ -26,7 +26,6 @@ Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wmissing-braces works as expected
-Configure miss: whether -Wcast-function-type works as expected
 Configure miss: /etc/redhat-release
 Configure miss: /etc/fedora-release
 Configure miss: /etc/mandriva-release
@@ -49,4 +48,3 @@ Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wmissing-braces works as expected
-Configure miss: whether -Wcast-function-type works as expected

@@ -33,6 +33,7 @@ Configure miss: /etc/SuSE-release
 Configure miss: /etc/debian_version
 Configure miss: /etc/gentoo-release
 Configure miss: QT
+Configure miss: SYSTEMD_200
 Configure miss: SELINUX
 Configure miss: LIBAUDIT
 Configure miss: LIBTEAMDCTL

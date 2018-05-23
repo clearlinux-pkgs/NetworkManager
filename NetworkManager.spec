@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.10.8
-Release  : 37
+Release  : 38
 URL      : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.8.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.8.tar.xz
 Summary  : System for maintaining active network connection
@@ -14,8 +14,8 @@ Requires: NetworkManager-bin
 Requires: NetworkManager-config
 Requires: NetworkManager-lib
 Requires: NetworkManager-data
-Requires: NetworkManager-doc
 Requires: NetworkManager-locales
+Requires: NetworkManager-man
 Requires: dhcp
 Requires: linux-firmware-wifi
 Requires: network-manager-applet
@@ -61,7 +61,6 @@ BuildRequires : pkgconfig(32libcurl)
 BuildRequires : pkgconfig(32libnl-3.0)
 BuildRequires : pkgconfig(32libsystemd)
 BuildRequires : pkgconfig(32libudev)
-BuildRequires : pkgconfig(32systemd)
 BuildRequires : pkgconfig(32uuid)
 BuildRequires : pkgconfig(bluez)
 BuildRequires : pkgconfig(dbus-1)
@@ -92,6 +91,7 @@ Summary: bin components for the NetworkManager package.
 Group: Binaries
 Requires: NetworkManager-data
 Requires: NetworkManager-config
+Requires: NetworkManager-man
 
 %description bin
 bin components for the NetworkManager package.
@@ -140,6 +140,7 @@ dev32 components for the NetworkManager package.
 %package doc
 Summary: doc components for the NetworkManager package.
 Group: Documentation
+Requires: NetworkManager-man
 
 %description doc
 doc components for the NetworkManager package.
@@ -171,6 +172,14 @@ Group: Default
 locales components for the NetworkManager package.
 
 
+%package man
+Summary: man components for the NetworkManager package.
+Group: Default
+
+%description man
+man components for the NetworkManager package.
+
+
 %prep
 %setup -q -n NetworkManager-1.10.8
 %patch1 -p1
@@ -185,7 +194,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526113855
+export SOURCE_DATE_EPOCH=1527036359
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -266,7 +275,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1526113855
+export SOURCE_DATE_EPOCH=1527036359
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -560,10 +569,6 @@ popd
 %files doc
 %defattr(-,root,root,-)
 %doc /usr/share/doc/NetworkManager/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man5/*
-%doc /usr/share/man/man7/*
-%doc /usr/share/man/man8/*
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager.conf.html
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager.devhelp2
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager.html
@@ -899,6 +904,18 @@ popd
 /usr/lib32/libnm-util.so.2.7.0
 /usr/lib32/libnm.so.0
 /usr/lib32/libnm.so.0.1.0
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/nm-online.1
+/usr/share/man/man1/nmcli.1
+/usr/share/man/man1/nmtui.1
+/usr/share/man/man5/NetworkManager.conf.5
+/usr/share/man/man5/nm-settings-keyfile.5
+/usr/share/man/man5/nm-settings.5
+/usr/share/man/man5/nm-system-settings.conf.5
+/usr/share/man/man7/nmcli-examples.7
+/usr/share/man/man8/NetworkManager.8
 
 %files locales -f NetworkManager.lang
 %defattr(-,root,root,-)

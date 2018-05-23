@@ -31,3 +31,4 @@ libelogind
 32QtNetwork
 QtDBus
 QtNetwork
+32systemd

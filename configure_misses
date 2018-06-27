@@ -19,7 +19,6 @@ Configure miss: readline.h
 Configure miss: history.h usability
 Configure miss: history.h presence
 Configure miss: history.h
-Configure miss: NEWT
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
@@ -40,7 +39,6 @@ Configure miss: dhcpcanon
 Configure miss: dhcpcd
 Configure miss: dnsmasq
 Configure miss: LIBPSL
-Configure miss: NEWT
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected

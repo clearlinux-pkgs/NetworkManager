@@ -9,7 +9,6 @@
 --with-systemd-logind=yes
 --with-systemd-journal=yes
 --enable-modify-system
---disable-ppp
 --disable-polkit-agent
 --enable-polkit=disabled
 --with-kernel-firmware-dir=/usr/lib/firmware
@@ -18,4 +17,5 @@
 --with-system-ca-path=/var/cache/ca-certs/anchors
 --with-iptables=/usr/bin/iptables
 --disable-bluez5-dun
+--with-nmtui=no
 PYTHON=/usr/bin/python3

@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.10.8
-Release  : 39
+Release  : 40
 URL      : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.8.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.10/NetworkManager-1.10.8.tar.xz
 Summary  : System for maintaining active network connection
@@ -54,6 +54,7 @@ BuildRequires : libxslt-bin
 BuildRequires : linux-firmware-wifi
 BuildRequires : ncurses-dev
 BuildRequires : ncurses-dev32
+BuildRequires : newt-dev
 BuildRequires : nss-dev
 BuildRequires : nss-lib32
 BuildRequires : perl(XML::Parser)
@@ -209,7 +210,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530117765
+export SOURCE_DATE_EPOCH=1530131639
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -228,7 +229,6 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-systemd-logind=yes \
 --with-systemd-journal=yes \
 --enable-modify-system \
---disable-ppp \
 --enable-polkit-agent \
 --enable-polkit=yes \
 --with-kernel-firmware-dir=/usr/lib/firmware \
@@ -238,7 +238,11 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 --disable-ovs \
-PYTHON=/usr/bin/python3
+--with-nmcli=yes \
+--with-modem-manager-1 \
+--with-suspend-resume=systemd \
+--with-systemd-journal=yes \
+PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
 pushd ../build32/
@@ -257,7 +261,6 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-systemd-logind=yes \
 --with-systemd-journal=yes \
 --enable-modify-system \
---disable-ppp \
 --enable-polkit-agent \
 --enable-polkit=yes \
 --with-kernel-firmware-dir=/usr/lib/firmware \
@@ -267,6 +270,10 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 --disable-ovs \
+--with-nmcli=yes \
+--with-modem-manager-1 \
+--with-suspend-resume=systemd \
+--with-systemd-journal=yes \
 PYTHON=/usr/bin/python3 --disable-ppp \
 --disable-teamdctl \
 --with-nmcli=no \
@@ -278,7 +285,6 @@ PYTHON=/usr/bin/python3 --disable-ppp \
 --with-systemd-logind=yes \
 --with-systemd-journal=yes \
 --enable-modify-system \
---disable-ppp \
 --disable-polkit-agent \
 --enable-polkit=disabled \
 --with-kernel-firmware-dir=/usr/lib/firmware \
@@ -287,11 +293,12 @@ PYTHON=/usr/bin/python3 --disable-ppp \
 --with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 --disable-bluez5-dun \
+--with-nmtui=no \
 PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1530117765
+export SOURCE_DATE_EPOCH=1530131639
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/NetworkManager
 cp COPYING %{buildroot}/usr/share/doc/NetworkManager/COPYING
@@ -326,6 +333,10 @@ popd
 /usr/bin/NetworkManager
 /usr/bin/nm-online
 /usr/bin/nmcli
+/usr/bin/nmtui
+/usr/bin/nmtui-connect
+/usr/bin/nmtui-edit
+/usr/bin/nmtui-hostname
 /usr/libexec/nm-dhcp-helper
 /usr/libexec/nm-dispatcher
 /usr/libexec/nm-iface-helper
@@ -941,6 +952,9 @@ popd
 %defattr(-,root,root,-)
 /usr/share/man/man1/nm-online.1
 /usr/share/man/man1/nmcli.1
+/usr/share/man/man1/nmtui-connect.1
+/usr/share/man/man1/nmtui-edit.1
+/usr/share/man/man1/nmtui-hostname.1
 /usr/share/man/man1/nmtui.1
 /usr/share/man/man5/NetworkManager.conf.5
 /usr/share/man/man5/nm-settings-keyfile.5

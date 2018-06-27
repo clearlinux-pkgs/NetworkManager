@@ -17,4 +17,5 @@
 --enable-wifi
 --with-system-ca-path=/var/cache/ca-certs/anchors
 --with-iptables=/usr/bin/iptables
+--disable-bluez5-dun
 PYTHON=/usr/bin/python3

@@ -23,3 +23,6 @@ libsoup-dev32
 dhcp
 jansson-dev
 linux-firmware-wifi
+ModemManager-dev
+ModemManager-dev32
+

@@ -4,3 +4,4 @@ dhcp
 network-manager-applet
 linux-firmware-wifi
 wpa_supplicant
+ModemManager

@@ -1,4 +1,5 @@
 ld-linux-x86-64.so.2
+libbluetooth.so.3
 libc.so.6
 libcurl.so.4
 libdbus-1.so.3
@@ -9,6 +10,7 @@ libgio-2.0.so.0
 libglib-2.0.so.0
 libgmodule-2.0.so.0
 libgobject-2.0.so.0
+libmm-glib.so.0
 libndp.so.0
 libnl-3.so.200
 libnspr4.so

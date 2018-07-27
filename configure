@@ -22,4 +22,5 @@
 --with-modem-manager-1
 --with-suspend-resume=systemd
 --with-systemd-journal=yes
+--with-libnm-glib
 PYTHON=/usr/bin/python3

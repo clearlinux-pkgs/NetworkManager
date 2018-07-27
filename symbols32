@@ -997,6 +997,8 @@ libnm.so.0:libnm_1_0_4
 libnm.so.0:libnm_1_0_6
 libnm.so.0:libnm_1_10_0
 libnm.so.0:libnm_1_10_2
+libnm.so.0:libnm_1_12_0
+libnm.so.0:libnm_1_12_2
 libnm.so.0:libnm_1_2_0
 libnm.so.0:libnm_1_2_4
 libnm.so.0:libnm_1_4_0
@@ -1043,6 +1045,11 @@ libnm.so.0:nm_agent_manager_error_get_type
 libnm.so.0:nm_agent_manager_error_quark
 libnm.so.0:nm_bluetooth_capabilities_get_type
 libnm.so.0:nm_capability_get_type
+libnm.so.0:nm_checkpoint_create_flags_get_type
+libnm.so.0:nm_checkpoint_get_created
+libnm.so.0:nm_checkpoint_get_devices
+libnm.so.0:nm_checkpoint_get_rollback_timeout
+libnm.so.0:nm_checkpoint_get_type
 libnm.so.0:nm_client_activate_connection_async
 libnm.so.0:nm_client_activate_connection_finish
 libnm.so.0:nm_client_add_and_activate_connection_async
@@ -1052,6 +1059,14 @@ libnm.so.0:nm_client_add_connection_finish
 libnm.so.0:nm_client_check_connectivity
 libnm.so.0:nm_client_check_connectivity_async
 libnm.so.0:nm_client_check_connectivity_finish
+libnm.so.0:nm_client_checkpoint_adjust_rollback_timeout
+libnm.so.0:nm_client_checkpoint_adjust_rollback_timeout_finish
+libnm.so.0:nm_client_checkpoint_create
+libnm.so.0:nm_client_checkpoint_create_finish
+libnm.so.0:nm_client_checkpoint_destroy
+libnm.so.0:nm_client_checkpoint_destroy_finish
+libnm.so.0:nm_client_checkpoint_rollback
+libnm.so.0:nm_client_checkpoint_rollback_finish
 libnm.so.0:nm_client_connectivity_check_get_available
 libnm.so.0:nm_client_connectivity_check_get_enabled
 libnm.so.0:nm_client_connectivity_check_set_enabled
@@ -1063,6 +1078,7 @@ libnm.so.0:nm_client_error_quark
 libnm.so.0:nm_client_get_activating_connection
 libnm.so.0:nm_client_get_active_connections
 libnm.so.0:nm_client_get_all_devices
+libnm.so.0:nm_client_get_checkpoints
 libnm.so.0:nm_client_get_connection_by_id
 libnm.so.0:nm_client_get_connection_by_path
 libnm.so.0:nm_client_get_connection_by_uuid
@@ -1143,12 +1159,18 @@ libnm.so.0:nm_connection_get_setting_ip_tunnel
 libnm.so.0:nm_connection_get_setting_macsec
 libnm.so.0:nm_connection_get_setting_macvlan
 libnm.so.0:nm_connection_get_setting_olpc_mesh
+libnm.so.0:nm_connection_get_setting_ovs_bridge
+libnm.so.0:nm_connection_get_setting_ovs_interface
+libnm.so.0:nm_connection_get_setting_ovs_patch
+libnm.so.0:nm_connection_get_setting_ovs_port
 libnm.so.0:nm_connection_get_setting_ppp
 libnm.so.0:nm_connection_get_setting_pppoe
 libnm.so.0:nm_connection_get_setting_proxy
 libnm.so.0:nm_connection_get_setting_serial
+libnm.so.0:nm_connection_get_setting_tc_config
 libnm.so.0:nm_connection_get_setting_team
 libnm.so.0:nm_connection_get_setting_team_port
+libnm.so.0:nm_connection_get_setting_tun
 libnm.so.0:nm_connection_get_setting_vlan
 libnm.so.0:nm_connection_get_setting_vpn
 libnm.so.0:nm_connection_get_setting_vxlan
@@ -1251,6 +1273,7 @@ libnm.so.0:nm_device_infiniband_get_carrier
 libnm.so.0:nm_device_infiniband_get_hw_address
 libnm.so.0:nm_device_infiniband_get_type
 libnm.so.0:nm_device_ip_tunnel_get_encapsulation_limit
+libnm.so.0:nm_device_ip_tunnel_get_flags
 libnm.so.0:nm_device_ip_tunnel_get_flow_label
 libnm.so.0:nm_device_ip_tunnel_get_input_key
 libnm.so.0:nm_device_ip_tunnel_get_local
@@ -1292,8 +1315,10 @@ libnm.so.0:nm_device_olpc_mesh_get_active_channel
 libnm.so.0:nm_device_olpc_mesh_get_companion
 libnm.so.0:nm_device_olpc_mesh_get_hw_address
 libnm.so.0:nm_device_olpc_mesh_get_type
+libnm.so.0:nm_device_ovs_bridge_get_slaves
 libnm.so.0:nm_device_ovs_bridge_get_type
 libnm.so.0:nm_device_ovs_interface_get_type
+libnm.so.0:nm_device_ovs_port_get_slaves
 libnm.so.0:nm_device_ovs_port_get_type
 libnm.so.0:nm_device_ppp_get_type
 libnm.so.0:nm_device_reapply
@@ -1346,6 +1371,7 @@ libnm.so.0:nm_device_wifi_get_active_access_point
 libnm.so.0:nm_device_wifi_get_bitrate
 libnm.so.0:nm_device_wifi_get_capabilities
 libnm.so.0:nm_device_wifi_get_hw_address
+libnm.so.0:nm_device_wifi_get_last_scan
 libnm.so.0:nm_device_wifi_get_mode
 libnm.so.0:nm_device_wifi_get_permanent_hw_address
 libnm.so.0:nm_device_wifi_get_type
@@ -1425,6 +1451,7 @@ libnm.so.0:nm_ip_route_set_next_hop
 libnm.so.0:nm_ip_route_set_next_hop_binary
 libnm.so.0:nm_ip_route_set_prefix
 libnm.so.0:nm_ip_route_unref
+libnm.so.0:nm_ip_tunnel_flags_get_type
 libnm.so.0:nm_ip_tunnel_mode_get_type
 libnm.so.0:nm_lldp_neighbor_get_attr_names
 libnm.so.0:nm_lldp_neighbor_get_attr_string_value
@@ -1445,6 +1472,8 @@ libnm.so.0:nm_remote_connection_commit_changes_finish
 libnm.so.0:nm_remote_connection_delete
 libnm.so.0:nm_remote_connection_delete_async
 libnm.so.0:nm_remote_connection_delete_finish
+libnm.so.0:nm_remote_connection_get_filename
+libnm.so.0:nm_remote_connection_get_flags
 libnm.so.0:nm_remote_connection_get_secrets
 libnm.so.0:nm_remote_connection_get_secrets_async
 libnm.so.0:nm_remote_connection_get_secrets_finish
@@ -1624,6 +1653,7 @@ libnm.so.0:nm_setting_connection_get_id
 libnm.so.0:nm_setting_connection_get_interface_name
 libnm.so.0:nm_setting_connection_get_lldp
 libnm.so.0:nm_setting_connection_get_master
+libnm.so.0:nm_setting_connection_get_mdns
 libnm.so.0:nm_setting_connection_get_metered
 libnm.so.0:nm_setting_connection_get_num_permissions
 libnm.so.0:nm_setting_connection_get_num_secondaries
@@ -1638,6 +1668,7 @@ libnm.so.0:nm_setting_connection_get_uuid
 libnm.so.0:nm_setting_connection_get_zone
 libnm.so.0:nm_setting_connection_is_slave_type
 libnm.so.0:nm_setting_connection_lldp_get_type
+libnm.so.0:nm_setting_connection_mdns_get_type
 libnm.so.0:nm_setting_connection_new
 libnm.so.0:nm_setting_connection_permissions_user_allowed
 libnm.so.0:nm_setting_connection_remove_permission
@@ -1709,6 +1740,7 @@ libnm.so.0:nm_setting_ip4_config_get_type
 libnm.so.0:nm_setting_ip4_config_new
 libnm.so.0:nm_setting_ip6_config_addr_gen_mode_get_type
 libnm.so.0:nm_setting_ip6_config_get_addr_gen_mode
+libnm.so.0:nm_setting_ip6_config_get_dhcp_duid
 libnm.so.0:nm_setting_ip6_config_get_ip6_privacy
 libnm.so.0:nm_setting_ip6_config_get_token
 libnm.so.0:nm_setting_ip6_config_get_type
@@ -1759,6 +1791,7 @@ libnm.so.0:nm_setting_ip_config_remove_dns_search
 libnm.so.0:nm_setting_ip_config_remove_dns_search_by_value
 libnm.so.0:nm_setting_ip_config_remove_route
 libnm.so.0:nm_setting_ip_config_remove_route_by_value
+libnm.so.0:nm_setting_ip_tunnel_get_flags
 libnm.so.0:nm_setting_ip_tunnel_get_input_key
 libnm.so.0:nm_setting_ip_tunnel_get_local
 libnm.so.0:nm_setting_ip_tunnel_get_mode
@@ -1780,6 +1813,7 @@ libnm.so.0:nm_setting_macsec_get_mka_ckn
 libnm.so.0:nm_setting_macsec_get_mode
 libnm.so.0:nm_setting_macsec_get_parent
 libnm.so.0:nm_setting_macsec_get_port
+libnm.so.0:nm_setting_macsec_get_send_sci
 libnm.so.0:nm_setting_macsec_get_type
 libnm.so.0:nm_setting_macsec_get_validation
 libnm.so.0:nm_setting_macsec_mode_get_type
@@ -1953,9 +1987,11 @@ libnm.so.0:nm_setting_vpn_add_secret
 libnm.so.0:nm_setting_vpn_foreach_data_item
 libnm.so.0:nm_setting_vpn_foreach_secret
 libnm.so.0:nm_setting_vpn_get_data_item
+libnm.so.0:nm_setting_vpn_get_data_keys
 libnm.so.0:nm_setting_vpn_get_num_data_items
 libnm.so.0:nm_setting_vpn_get_num_secrets
 libnm.so.0:nm_setting_vpn_get_secret
+libnm.so.0:nm_setting_vpn_get_secret_keys
 libnm.so.0:nm_setting_vpn_get_service_type
 libnm.so.0:nm_setting_vpn_get_timeout
 libnm.so.0:nm_setting_vpn_get_type
@@ -2037,6 +2073,7 @@ libnm.so.0:nm_setting_wireless_get_seen_bssid
 libnm.so.0:nm_setting_wireless_get_ssid
 libnm.so.0:nm_setting_wireless_get_tx_power
 libnm.so.0:nm_setting_wireless_get_type
+libnm.so.0:nm_setting_wireless_get_wake_on_wlan
 libnm.so.0:nm_setting_wireless_new
 libnm.so.0:nm_setting_wireless_powersave_get_type
 libnm.so.0:nm_setting_wireless_remove_mac_blacklist_item
@@ -2047,7 +2084,9 @@ libnm.so.0:nm_setting_wireless_security_add_proto
 libnm.so.0:nm_setting_wireless_security_clear_groups
 libnm.so.0:nm_setting_wireless_security_clear_pairwise
 libnm.so.0:nm_setting_wireless_security_clear_protos
+libnm.so.0:nm_setting_wireless_security_fils_get_type
 libnm.so.0:nm_setting_wireless_security_get_auth_alg
+libnm.so.0:nm_setting_wireless_security_get_fils
 libnm.so.0:nm_setting_wireless_security_get_group
 libnm.so.0:nm_setting_wireless_security_get_key_mgmt
 libnm.so.0:nm_setting_wireless_security_get_leap_password
@@ -2077,6 +2116,8 @@ libnm.so.0:nm_setting_wireless_security_remove_proto
 libnm.so.0:nm_setting_wireless_security_remove_proto_by_value
 libnm.so.0:nm_setting_wireless_security_set_wep_key
 libnm.so.0:nm_setting_wireless_security_wps_method_get_type
+libnm.so.0:nm_setting_wireless_wake_on_wlan_get_type
+libnm.so.0:nm_settings_connection_flags_get_type
 libnm.so.0:nm_settings_error_get_type
 libnm.so.0:nm_settings_error_quark
 libnm.so.0:nm_settings_update2_flags_get_type
@@ -2147,6 +2188,7 @@ libnm.so.0:nm_utils_file_is_pkcs12
 libnm.so.0:nm_utils_file_is_private_key
 libnm.so.0:nm_utils_file_search_in_paths
 libnm.so.0:nm_utils_format_variant_attributes
+libnm.so.0:nm_utils_get_timestamp_msec
 libnm.so.0:nm_utils_hexstr2bin
 libnm.so.0:nm_utils_hwaddr_atoba
 libnm.so.0:nm_utils_hwaddr_aton
@@ -2272,6 +2314,7 @@ libnm.so.0:nm_vpn_service_plugin_set_config
 libnm.so.0:nm_vpn_service_plugin_set_ip4_config
 libnm.so.0:nm_vpn_service_plugin_set_ip6_config
 libnm.so.0:nm_vpn_service_plugin_set_login_banner
+libnm.so.0:nm_vpn_service_plugin_shutdown
 libnm.so.0:nm_vpn_service_state_get_type
 libnm.so.0:nm_wep_key_type_get_type
 libnm.so.0:nm_wimax_nsp_connection_valid

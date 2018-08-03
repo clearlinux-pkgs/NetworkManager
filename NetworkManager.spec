@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.12.2
-Release  : 43
+Release  : 44
 URL      : https://download.gnome.org/sources/NetworkManager/1.12/NetworkManager-1.12.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.12/NetworkManager-1.12.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -24,7 +24,6 @@ Requires: network-manager-applet
 Requires: wpa_supplicant
 BuildRequires : ModemManager-dev
 BuildRequires : ModemManager-dev32
-BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
 BuildRequires : dbus-dev
 BuildRequires : dbus-dev32
@@ -213,7 +212,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532714759
+export SOURCE_DATE_EPOCH=1533322008
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -303,12 +302,12 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1532714759
+export SOURCE_DATE_EPOCH=1533322008
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/NetworkManager
 cp COPYING %{buildroot}/usr/share/doc/NetworkManager/COPYING
-cp libnm-util/COPYING %{buildroot}/usr/share/doc/NetworkManager/libnm-util_COPYING
 cp docs/api/html/license.html %{buildroot}/usr/share/doc/NetworkManager/docs_api_html_license.html
+cp libnm-util/COPYING %{buildroot}/usr/share/doc/NetworkManager/libnm-util_COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -320,12 +319,12 @@ fi
 popd
 %make_install
 %find_lang NetworkManager
-## make_install_append content
+## install_append content
 pushd %{buildroot}/usr/lib/systemd/system
 ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
 ln -s NetworkManager-dispatcher.service dbus-org.freedesktop.nm-dispatcher.service
 popd
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -348,12 +347,12 @@ popd
 
 %files config
 %defattr(-,root,root,-)
+%exclude /usr/lib/udev/rules.d/84-nm-drivers.rules
 /usr/lib/systemd/system/NetworkManager-dispatcher.service
 /usr/lib/systemd/system/NetworkManager-wait-online.service
 /usr/lib/systemd/system/NetworkManager.service
 /usr/lib/systemd/system/dbus-org.freedesktop.NetworkManager.service
 /usr/lib/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
-/usr/lib/udev/rules.d/84-nm-drivers.rules
 /usr/lib/udev/rules.d/85-nm-unmanaged.rules
 /usr/lib/udev/rules.d/90-nm-thunderbolt.rules
 

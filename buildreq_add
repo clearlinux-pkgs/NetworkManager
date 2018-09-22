@@ -26,3 +26,5 @@ linux-firmware-wifi
 ModemManager-dev
 ModemManager-dev32
 newt-dev
+jansson-dev
+buildreq-kde

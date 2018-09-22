@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.12.2
-Release  : 44
+Release  : 45
 URL      : https://download.gnome.org/sources/NetworkManager/1.12/NetworkManager-1.12.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.12/NetworkManager-1.12.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -24,6 +24,8 @@ Requires: network-manager-applet
 Requires: wpa_supplicant
 BuildRequires : ModemManager-dev
 BuildRequires : ModemManager-dev32
+BuildRequires : buildreq-gnome
+BuildRequires : buildreq-kde
 BuildRequires : buildreq-meson
 BuildRequires : dbus-dev
 BuildRequires : dbus-dev32
@@ -88,6 +90,7 @@ BuildRequires : readline-dev
 Patch1: spoof-online.patch
 Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
 Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
+Patch4: version-fix-compile-error-due-to-NM_AVAILABLE_IN_1_12_2-m.patch
 
 %description
 ******************
@@ -96,10 +99,10 @@ Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 %package bin
 Summary: bin components for the NetworkManager package.
 Group: Binaries
-Requires: NetworkManager-data
-Requires: NetworkManager-config
-Requires: NetworkManager-license
-Requires: NetworkManager-man
+Requires: NetworkManager-data = %{version}-%{release}
+Requires: NetworkManager-config = %{version}-%{release}
+Requires: NetworkManager-license = %{version}-%{release}
+Requires: NetworkManager-man = %{version}-%{release}
 
 %description bin
 bin components for the NetworkManager package.
@@ -124,10 +127,10 @@ data components for the NetworkManager package.
 %package dev
 Summary: dev components for the NetworkManager package.
 Group: Development
-Requires: NetworkManager-lib
-Requires: NetworkManager-bin
-Requires: NetworkManager-data
-Provides: NetworkManager-devel
+Requires: NetworkManager-lib = %{version}-%{release}
+Requires: NetworkManager-bin = %{version}-%{release}
+Requires: NetworkManager-data = %{version}-%{release}
+Provides: NetworkManager-devel = %{version}-%{release}
 
 %description dev
 dev components for the NetworkManager package.
@@ -136,10 +139,10 @@ dev components for the NetworkManager package.
 %package dev32
 Summary: dev32 components for the NetworkManager package.
 Group: Default
-Requires: NetworkManager-lib32
-Requires: NetworkManager-bin
-Requires: NetworkManager-data
-Requires: NetworkManager-dev
+Requires: NetworkManager-lib32 = %{version}-%{release}
+Requires: NetworkManager-bin = %{version}-%{release}
+Requires: NetworkManager-data = %{version}-%{release}
+Requires: NetworkManager-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the NetworkManager package.
@@ -148,7 +151,7 @@ dev32 components for the NetworkManager package.
 %package doc
 Summary: doc components for the NetworkManager package.
 Group: Documentation
-Requires: NetworkManager-man
+Requires: NetworkManager-man = %{version}-%{release}
 
 %description doc
 doc components for the NetworkManager package.
@@ -157,8 +160,8 @@ doc components for the NetworkManager package.
 %package lib
 Summary: lib components for the NetworkManager package.
 Group: Libraries
-Requires: NetworkManager-data
-Requires: NetworkManager-license
+Requires: NetworkManager-data = %{version}-%{release}
+Requires: NetworkManager-license = %{version}-%{release}
 
 %description lib
 lib components for the NetworkManager package.
@@ -167,8 +170,8 @@ lib components for the NetworkManager package.
 %package lib32
 Summary: lib32 components for the NetworkManager package.
 Group: Default
-Requires: NetworkManager-data
-Requires: NetworkManager-license
+Requires: NetworkManager-data = %{version}-%{release}
+Requires: NetworkManager-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the NetworkManager package.
@@ -203,6 +206,7 @@ man components for the NetworkManager package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 pushd ..
 cp -a NetworkManager-1.12.2 build32
 popd
@@ -212,7 +216,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533322008
+export SOURCE_DATE_EPOCH=1537643701
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -302,7 +306,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1533322008
+export SOURCE_DATE_EPOCH=1537643701
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/NetworkManager
 cp COPYING %{buildroot}/usr/share/doc/NetworkManager/COPYING

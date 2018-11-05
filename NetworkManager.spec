@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.14.4
-Release  : 46
+Release  : 47
 URL      : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.4.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.4.tar.xz
 Summary  : System for maintaining active network connection
@@ -92,6 +92,7 @@ BuildRequires : readline-dev
 Patch1: spoof-online.patch
 Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
 Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
+Patch4: CVE-2018-15688.patch
 
 %description
 ******************
@@ -228,6 +229,7 @@ services components for the NetworkManager package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 pushd ..
 cp -a NetworkManager-1.14.4 build32
 popd
@@ -237,14 +239,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1540747658
+export SOURCE_DATE_EPOCH=1541454821
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --disable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -328,7 +330,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1540747658
+export SOURCE_DATE_EPOCH=1541454821
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING
@@ -379,6 +381,14 @@ popd
 /usr/lib64/girepository-1.0/NM-1.0.typelib
 /usr/lib64/girepository-1.0/NMClient-1.0.typelib
 /usr/lib64/girepository-1.0/NetworkManager-1.0.typelib
+/usr/share/abi/libnm-glib-vpn.so.1.2.0.abi
+/usr/share/abi/libnm-glib-vpn.so.1.abi
+/usr/share/abi/libnm-glib.so.4.9.0.abi
+/usr/share/abi/libnm-glib.so.4.abi
+/usr/share/abi/libnm-util.so.2.7.0.abi
+/usr/share/abi/libnm-util.so.2.abi
+/usr/share/abi/libnm.so.0.1.0.abi
+/usr/share/abi/libnm.so.0.abi
 /usr/share/bash-completion/completions/nmcli
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.AccessPoint.xml
 /usr/share/dbus-1/interfaces/org.freedesktop.NetworkManager.AgentManager.xml

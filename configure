@@ -1,4 +1,4 @@
---disable-ppp
+--enable-ppp
 --disable-teamdctl
 --with-nmcli=yes
 --disable-json-validation

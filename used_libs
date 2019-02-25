@@ -25,5 +25,6 @@ libreadline.so.7
 libsmime3.so
 libssl3.so
 libsystemd.so.0
+libtinfow.so.6
 libudev.so.1
 libuuid.so.1

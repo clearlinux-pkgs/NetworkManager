@@ -29,3 +29,4 @@ newt-dev
 jansson-dev
 buildreq-kde
 ppp-dev
+libpsl-dev32

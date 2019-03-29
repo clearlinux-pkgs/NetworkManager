@@ -18,4 +18,5 @@
 --with-iptables=/usr/bin/iptables
 --disable-bluez5-dun
 --with-nmtui=no
+--with-libpsl=no
 PYTHON=/usr/bin/python3

@@ -6,7 +6,6 @@ Configure miss: x86_64-generic-linux-gnu-readelf
 Configure miss: LIBTEAMDCTL
 Configure miss: dhcpcanon
 Configure miss: dhcpcd
-Configure miss: LIBPSL
 Configure miss: readline.h usability
 Configure miss: readline.h presence
 Configure miss: readline.h
@@ -26,7 +25,6 @@ Configure miss: i686-generic-linux-gnu-readelf
 Configure miss: LIBTEAMDCTL
 Configure miss: dhcpcanon
 Configure miss: dhcpcd
-Configure miss: LIBPSL
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected

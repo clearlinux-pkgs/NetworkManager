@@ -4,10 +4,10 @@
 #
 Name     : NetworkManager
 Version  : 1.14.6
-Release  : 50
+Release  : 51
 URL      : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
-Summary  : Network connection manager and user applications
+Summary  : System for maintaining active network connection
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: NetworkManager-bin = %{version}-%{release}
@@ -55,6 +55,7 @@ BuildRequires : libndp-dev
 BuildRequires : libndp-dev32
 BuildRequires : libnl-dev
 BuildRequires : libnl-dev32
+BuildRequires : libpsl-dev32
 BuildRequires : libsoup-dev
 BuildRequires : libsoup-dev32
 BuildRequires : libxslt-bin
@@ -95,12 +96,8 @@ Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
 Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 
 %description
-Plugins generally have three components:
-1) plugin object: manages the individual "connections", which are
-just objects wrapped around on-disk config data.  The plugin handles requests
-to add new connections via the NM D-Bus API, and also watches config
-directories for changes to configuration data.  Plugins implement the
-NMSettingsPlugin interface.  See plugin.c.
+******************
+2008-12-11: NetworkManager core daemon has moved to git.freedesktop.org!
 
 %package bin
 Summary: bin components for the NetworkManager package.
@@ -139,7 +136,6 @@ Requires: NetworkManager-lib = %{version}-%{release}
 Requires: NetworkManager-bin = %{version}-%{release}
 Requires: NetworkManager-data = %{version}-%{release}
 Provides: NetworkManager-devel = %{version}-%{release}
-Requires: NetworkManager = %{version}-%{release}
 
 %description dev
 dev components for the NetworkManager package.
@@ -243,7 +239,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551110480
+export SOURCE_DATE_EPOCH=1553888384
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -281,10 +277,10 @@ make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="$ASFLAGS --32"
-export CFLAGS="$CFLAGS -m32"
-export CXXFLAGS="$CXXFLAGS -m32"
-export LDFLAGS="$LDFLAGS -m32"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -330,11 +326,12 @@ PYTHON=/usr/bin/python3 --disable-ppp \
 --with-iptables=/usr/bin/iptables \
 --disable-bluez5-dun \
 --with-nmtui=no \
+--with-libpsl=no \
 PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1551110480
+export SOURCE_DATE_EPOCH=1553888384
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING
@@ -438,6 +435,12 @@ popd
 /usr/share/dbus-1/system.d/org.freedesktop.NetworkManager.conf
 /usr/share/gir-1.0/*.gir
 /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
+/usr/share/vala/vapi/libnm-glib.deps
+/usr/share/vala/vapi/libnm-glib.vapi
+/usr/share/vala/vapi/libnm-util.deps
+/usr/share/vala/vapi/libnm-util.vapi
+/usr/share/vala/vapi/libnm.deps
+/usr/share/vala/vapi/libnm.vapi
 
 %files dev
 %defattr(-,root,root,-)

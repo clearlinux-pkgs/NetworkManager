@@ -20,6 +20,7 @@ libplc4.so
 libplds4.so
 libpolkit-agent-1.so.0
 libpolkit-gobject-1.so.0
+libpsl.so.5
 libpthread.so.0
 libreadline.so.7
 libsmime3.so

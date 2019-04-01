@@ -4,12 +4,13 @@
 #
 Name     : NetworkManager
 Version  : 1.14.6
-Release  : 51
+Release  : 52
 URL      : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Summary  : System for maintaining active network connection
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
+Requires: NetworkManager-autostart = %{version}-%{release}
 Requires: NetworkManager-bin = %{version}-%{release}
 Requires: NetworkManager-config = %{version}-%{release}
 Requires: NetworkManager-data = %{version}-%{release}
@@ -91,13 +92,20 @@ BuildRequires : pkgconfig(uuid)
 BuildRequires : ppp-dev
 BuildRequires : pygobject
 BuildRequires : readline-dev
-Patch1: spoof-online.patch
-Patch2: 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
-Patch3: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
+Patch1: 0001-Add-clr-all-ifs-option.patch
+Patch2: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 
 %description
 ******************
 2008-12-11: NetworkManager core daemon has moved to git.freedesktop.org!
+
+%package autostart
+Summary: autostart components for the NetworkManager package.
+Group: Default
+
+%description autostart
+autostart components for the NetworkManager package.
+
 
 %package bin
 Summary: bin components for the NetworkManager package.
@@ -106,7 +114,6 @@ Requires: NetworkManager-data = %{version}-%{release}
 Requires: NetworkManager-libexec = %{version}-%{release}
 Requires: NetworkManager-config = %{version}-%{release}
 Requires: NetworkManager-license = %{version}-%{release}
-Requires: NetworkManager-man = %{version}-%{release}
 Requires: NetworkManager-services = %{version}-%{release}
 
 %description bin
@@ -229,7 +236,6 @@ services components for the NetworkManager package.
 %setup -q -n NetworkManager-1.14.6
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 pushd ..
 cp -a NetworkManager-1.14.6 build32
 popd
@@ -239,7 +245,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1553888384
+export SOURCE_DATE_EPOCH=1555371680
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -331,7 +337,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1553888384
+export SOURCE_DATE_EPOCH=1555371680
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING
@@ -353,6 +359,14 @@ pushd %{buildroot}/usr/lib/systemd/system
 ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
 ln -s NetworkManager-dispatcher.service dbus-org.freedesktop.nm-dispatcher.service
 popd
+mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+pushd %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+ln -sf ../NetworkManager.service NetworkManager.service
+popd
+mkdir -p %{buildroot}/usr/lib/systemd/system/network-online.target.wants
+pushd %{buildroot}/usr/lib/systemd/system/network-online.target.wants
+ln -sf ../NetworkManager-wait-online.service NetworkManager-wait-online.service
+popd
 ## install_append end
 
 %files
@@ -360,6 +374,11 @@ popd
 /usr/lib32/girepository-1.0/NM-1.0.typelib
 /usr/lib32/girepository-1.0/NMClient-1.0.typelib
 /usr/lib32/girepository-1.0/NetworkManager-1.0.typelib
+
+%files autostart
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/multi-user.target.wants/NetworkManager.service
+/usr/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service
 
 %files bin
 %defattr(-,root,root,-)
@@ -1056,6 +1075,8 @@ popd
 
 %files services
 %defattr(-,root,root,-)
+%exclude /usr/lib/systemd/system/multi-user.target.wants/NetworkManager.service
+%exclude /usr/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service
 /usr/lib/systemd/system/NetworkManager-dispatcher.service
 /usr/lib/systemd/system/NetworkManager-wait-online.service
 /usr/lib/systemd/system/NetworkManager.service

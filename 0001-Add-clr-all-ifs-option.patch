@@ -1,0 +1,50 @@
+From 58ee4e75b3f24acf3ac6ed8392217c03ee0b4ad5 Mon Sep 17 00:00:00 2001
+From: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+Date: Thu, 28 Mar 2019 11:54:48 -0700
+Subject: [PATCH] Add --clr-all-ifs option.
+
+It's a Clear Linux specific option used as a "marker" option to query
+the capability of NetworkManager to manage all the interfaces. It's
+needed to distinguish NetworkManager from previously patched version
+which did not have capability to manage ethernet interfaces.
+
+Signed-off-by: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+---
+ src/main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/main.c b/src/main.c
+index f834fa94f..8e8a50582 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -70,6 +70,8 @@ static struct {
+ 	gboolean print_config;
+ 	gboolean become_daemon;
+ 	gboolean g_fatal_warnings;
++	gboolean clr_all_ifs; /* in Clear Linux: is capable of managing all the
++							 interfaces (previously patched to ignore wired). */
+ 	gboolean run_from_build_dir;
+ 	char *opt_log_level;
+ 	char *opt_log_domains;
+@@ -201,6 +203,7 @@ do_early_setup (int *argc, char **argv[], NMConfigCmdLineOptions *config_cli)
+ 		{ "pid-file", 'p', 0, G_OPTION_ARG_FILENAME, &global_opt.pidfile, N_("Specify the location of a PID file"), NM_DEFAULT_PID_FILE },
+ 		{ "run-from-build-dir", 0, 0, G_OPTION_ARG_NONE, &global_opt.run_from_build_dir, "Run from build directory", NULL },
+ 		{ "print-config", 0, 0, G_OPTION_ARG_NONE, &global_opt.print_config, N_("Print NetworkManager configuration and exit"), NULL },
++		{ "clr-all-ifs", 0, 0, G_OPTION_ARG_NONE, &global_opt.clr_all_ifs, N_("Internal Clear Linux use"), NULL },
+ 		{NULL}
+ 	};
+ 
+@@ -250,6 +253,10 @@ main (int argc, char *argv[])
+ 
+ 	do_early_setup (&argc, &argv, config_cli);
+ 
++	if (global_opt.clr_all_ifs) {
++		exit (0);
++	}
++
+ 	if (global_opt.g_fatal_warnings)
+ 		_set_g_fatal_warnings ();
+ 
+-- 
+2.20.1
+

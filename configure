@@ -18,9 +18,6 @@
 --with-system-ca-path=/var/cache/ca-certs/anchors
 --with-iptables=/usr/bin/iptables
 --disable-ovs
---with-nmcli=yes
 --with-modem-manager-1
---with-suspend-resume=systemd
---with-systemd-journal=yes
 --with-libnm-glib
 PYTHON=/usr/bin/python3

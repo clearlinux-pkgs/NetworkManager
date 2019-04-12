@@ -23,4 +23,5 @@
 --with-suspend-resume=systemd
 --with-systemd-journal=yes
 --with-libnm-glib
+--disable-concheck
 PYTHON=/usr/bin/python3

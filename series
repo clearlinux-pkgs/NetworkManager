@@ -1,4 +1,3 @@
-spoof-online.patch
 0001-platform-Explicitly-unmanage-all-ethernet-devices.patch
 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 #CVE-2018-15688.patch

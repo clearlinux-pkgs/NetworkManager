@@ -15,6 +15,7 @@ Configure miss: history.h
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
+Configure miss: whether -Warray-bounds works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wmissing-braces works as expected
 Configure miss: QT
@@ -28,5 +29,6 @@ Configure miss: dhcpcd
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
+Configure miss: whether -Warray-bounds works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wmissing-braces works as expected

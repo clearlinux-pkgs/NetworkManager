@@ -4,10 +4,10 @@
 #
 Name     : NetworkManager
 Version  : 1.14.6
-Release  : 53
+Release  : 54
 URL      : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
-Summary  : System for maintaining active network connection
+Summary  : Network connection manager and user applications
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: NetworkManager-autostart = %{version}-%{release}
@@ -96,8 +96,12 @@ Patch1: 0001-Add-clr-all-ifs-option.patch
 Patch2: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 
 %description
-******************
-2008-12-11: NetworkManager core daemon has moved to git.freedesktop.org!
+Plugins generally have three components:
+1) plugin object: manages the individual "connections", which are
+just objects wrapped around on-disk config data.  The plugin handles requests
+to add new connections via the NM D-Bus API, and also watches config
+directories for changes to configuration data.  Plugins implement the
+NMSettingsPlugin interface.  See plugin.c.
 
 %package autostart
 Summary: autostart components for the NetworkManager package.
@@ -143,6 +147,7 @@ Requires: NetworkManager-lib = %{version}-%{release}
 Requires: NetworkManager-bin = %{version}-%{release}
 Requires: NetworkManager-data = %{version}-%{release}
 Provides: NetworkManager-devel = %{version}-%{release}
+Requires: NetworkManager = %{version}-%{release}
 
 %description dev
 dev components for the NetworkManager package.
@@ -245,14 +250,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555371680
+export SOURCE_DATE_EPOCH=1557020719
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -273,10 +278,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 --disable-ovs \
---with-nmcli=yes \
 --with-modem-manager-1 \
---with-suspend-resume=systemd \
---with-systemd-journal=yes \
 --with-libnm-glib \
 PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
@@ -307,10 +309,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 --with-system-ca-path=/var/cache/ca-certs/anchors \
 --with-iptables=/usr/bin/iptables \
 --disable-ovs \
---with-nmcli=yes \
 --with-modem-manager-1 \
---with-suspend-resume=systemd \
---with-systemd-journal=yes \
 --with-libnm-glib \
 PYTHON=/usr/bin/python3 --disable-ppp \
 --disable-teamdctl \
@@ -337,7 +336,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1555371680
+export SOURCE_DATE_EPOCH=1557020719
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING

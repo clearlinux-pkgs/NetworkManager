@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.14.6
-Release  : 54
+Release  : 55
 URL      : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.14/NetworkManager-1.14.6.tar.xz
 Summary  : Network connection manager and user applications
@@ -20,11 +20,7 @@ Requires: NetworkManager-license = %{version}-%{release}
 Requires: NetworkManager-locales = %{version}-%{release}
 Requires: NetworkManager-man = %{version}-%{release}
 Requires: NetworkManager-services = %{version}-%{release}
-Requires: ModemManager
 Requires: dhcp
-Requires: linux-firmware-wifi
-Requires: network-manager-applet
-Requires: wpa_supplicant
 BuildRequires : ModemManager-dev
 BuildRequires : ModemManager-dev32
 BuildRequires : buildreq-gnome
@@ -250,7 +246,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557020719
+export SOURCE_DATE_EPOCH=1557242123
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -336,7 +332,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1557020719
+export SOURCE_DATE_EPOCH=1557242123
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING

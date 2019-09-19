@@ -4,10 +4,10 @@
 #
 Name     : NetworkManager
 Version  : 1.16.2
-Release  : 58
+Release  : 59
 URL      : https://download.gnome.org/sources/NetworkManager/1.16/NetworkManager-1.16.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.16/NetworkManager-1.16.2.tar.xz
-Summary  : Network connection manager and user applications
+Summary  : System for maintaining active network connection
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: NetworkManager-autostart = %{version}-%{release}
@@ -94,12 +94,8 @@ Patch1: 0001-Add-clr-all-ifs-option.patch
 Patch2: 0002-settings-Ensure-the-keyfile-storage-directory-actual.patch
 
 %description
-Plugins generally have three components:
-1) plugin object: manages the individual "connections", which are
-just objects wrapped around on-disk config data.  The plugin handles requests
-to add new connections via the NM D-Bus API, and also watches config
-directories for changes to configuration data.  Plugins implement the
-NMSettingsPlugin interface.  See plugin.c.
+******************
+2008-12-11: NetworkManager core daemon has moved to git.freedesktop.org!
 
 %package autostart
 Summary: autostart components for the NetworkManager package.
@@ -145,7 +141,6 @@ Requires: NetworkManager-lib = %{version}-%{release}
 Requires: NetworkManager-bin = %{version}-%{release}
 Requires: NetworkManager-data = %{version}-%{release}
 Provides: NetworkManager-devel = %{version}-%{release}
-Requires: NetworkManager = %{version}-%{release}
 Requires: NetworkManager = %{version}-%{release}
 
 %description dev
@@ -248,16 +243,16 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1561468794
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1568873666
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -286,9 +281,9 @@ make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -336,7 +331,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1561468794
+export SOURCE_DATE_EPOCH=1568873666
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING
@@ -353,6 +348,8 @@ fi
 popd
 %make_install
 %find_lang NetworkManager
+## Remove excluded files
+rm -f %{buildroot}/usr/lib/udev/rules.d/84-nm-drivers.rules
 ## install_append content
 pushd %{buildroot}/usr/lib/systemd/system
 ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
@@ -391,7 +388,6 @@ popd
 
 %files config
 %defattr(-,root,root,-)
-%exclude /usr/lib/udev/rules.d/84-nm-drivers.rules
 /usr/lib/udev/rules.d/85-nm-unmanaged.rules
 /usr/lib/udev/rules.d/90-nm-thunderbolt.rules
 

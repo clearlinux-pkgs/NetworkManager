@@ -20,4 +20,5 @@
 --disable-ovs
 --with-modem-manager-1
 --with-libnm-glib
+--with-iwd
 PYTHON=/usr/bin/python3

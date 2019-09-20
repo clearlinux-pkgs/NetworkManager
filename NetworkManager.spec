@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.16.2
-Release  : 59
+Release  : 60
 URL      : https://download.gnome.org/sources/NetworkManager/1.16/NetworkManager-1.16.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.16/NetworkManager-1.16.2.tar.xz
 Summary  : System for maintaining active network connection
@@ -244,7 +244,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568873666
+export SOURCE_DATE_EPOCH=1569006455
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -275,6 +275,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 --disable-ovs \
 --with-modem-manager-1 \
 --with-libnm-glib \
+--with-iwd \
 PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
@@ -306,6 +307,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 --disable-ovs \
 --with-modem-manager-1 \
 --with-libnm-glib \
+--with-iwd \
 PYTHON=/usr/bin/python3 --disable-ppp \
 --disable-teamdctl \
 --with-nmcli=no \
@@ -331,7 +333,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1568873666
+export SOURCE_DATE_EPOCH=1569006455
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/COPYING

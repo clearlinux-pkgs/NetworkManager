@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.20.8
-Release  : 63
+Release  : 64
 URL      : https://download.gnome.org/sources/NetworkManager/1.20/NetworkManager-1.20.8.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.20/NetworkManager-1.20.8.tar.xz
 Summary  : System for maintaining active network connection
@@ -240,7 +240,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575393963
+export SOURCE_DATE_EPOCH=1576103044
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -329,7 +329,7 @@ PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --ho
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1575393963
+export SOURCE_DATE_EPOCH=1576103044
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-1.20.8/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/11c746c0c250304a17169f4d6aa4a82d09fd7157
@@ -348,6 +348,9 @@ popd
 ## Remove excluded files
 rm -f %{buildroot}/usr/lib/udev/rules.d/84-nm-drivers.rules
 ## install_append content
+# install NetworkManager.pc
+install -m 0644 NetworkManager.pc %{buildroot}/usr/lib64/pkgconfig/NetworkManager.pc
+# Ensure dbus activation will work without requiring enable at boot
 pushd %{buildroot}/usr/lib/systemd/system
 ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service
 ln -s NetworkManager-dispatcher.service dbus-org.freedesktop.nm-dispatcher.service
@@ -557,6 +560,7 @@ popd
 /usr/include/libnm/nm-wifi-p2p-peer.h
 /usr/include/libnm/nm-wimax-nsp.h
 /usr/lib64/libnm.so
+/usr/lib64/pkgconfig/NetworkManager.pc
 /usr/lib64/pkgconfig/libnm.pc
 
 %files dev32

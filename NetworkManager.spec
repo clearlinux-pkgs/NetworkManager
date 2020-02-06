@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.20.8
-Release  : 64
+Release  : 65
 URL      : https://download.gnome.org/sources/NetworkManager/1.20/NetworkManager-1.20.8.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.20/NetworkManager-1.20.8.tar.xz
 Summary  : System for maintaining active network connection

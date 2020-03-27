@@ -19,4 +19,5 @@
 --disable-bluez5-dun
 --with-nmtui=no
 --with-libpsl=no
+--disable-modem-manager
 PYTHON=/usr/bin/python3

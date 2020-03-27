@@ -25,6 +25,7 @@ mm-glib
 32polkit-agent-1
 32libelogind
 32libpsl
+32mobile-broadband-provider-info
 libpsl
 libelogind
 32QtDBus

@@ -16,15 +16,3 @@ Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-attributes works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wparentheses-equality works as expected
-Configure miss: QT
-Configure miss: SELINUX
-Configure miss: LIBAUDIT
-Configure miss: i686-generic-linux-gnu-eu-readelf
-Configure miss: i686-generic-linux-gnu-readelf
-Configure miss: LIBTEAMDCTL
-Configure miss: dhcpcanon
-Configure miss: dhcpcd
-Configure miss: whether -Wunknown-warning-option works as expected
-Configure miss: whether -Wunknown-attributes works as expected
-Configure miss: whether -Wtypedef-redefinition works as expected
-Configure miss: whether -Wparentheses-equality works as expected

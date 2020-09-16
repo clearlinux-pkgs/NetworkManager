@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.22.10
-Release  : 66
+Release  : 67
 URL      : https://download.gnome.org/sources/NetworkManager/1.22/NetworkManager-1.22.10.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.22/NetworkManager-1.22.10.tar.xz
 Summary  : System for maintaining active network connection
@@ -23,54 +23,33 @@ Requires: NetworkManager-services = %{version}-%{release}
 Requires: dhcp
 Requires: ppp
 BuildRequires : ModemManager-dev
-BuildRequires : ModemManager-dev32
 BuildRequires : buildreq-gnome
 BuildRequires : buildreq-kde
 BuildRequires : buildreq-meson
 BuildRequires : dbus-dev
-BuildRequires : dbus-dev32
 BuildRequires : dbus-glib-dev
-BuildRequires : dbus-glib-dev32
 BuildRequires : dhcp
 BuildRequires : dnsmasq
 BuildRequires : docbook-xml
 BuildRequires : elfutils
-BuildRequires : gcc-dev32
-BuildRequires : gcc-libgcc32
-BuildRequires : gcc-libstdc++32
 BuildRequires : gettext
-BuildRequires : glibc-dev32
-BuildRequires : glibc-libc32
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : intltool
 BuildRequires : iptables
 BuildRequires : iptables-dev
-BuildRequires : iptables-dev32
 BuildRequires : jansson-dev
 BuildRequires : libndp-dev
-BuildRequires : libndp-dev32
 BuildRequires : libnl-dev
-BuildRequires : libnl-dev32
-BuildRequires : libpsl-dev32
 BuildRequires : libsoup-dev
-BuildRequires : libsoup-dev32
 BuildRequires : libxslt-bin
 BuildRequires : linux-firmware-wifi
 BuildRequires : ncurses-dev
-BuildRequires : ncurses-dev32
 BuildRequires : newt-dev
 BuildRequires : nss-dev
-BuildRequires : nss-lib32
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkg-config
-BuildRequires : pkgconfig(32gio-unix-2.0)
-BuildRequires : pkgconfig(32gmodule-2.0)
-BuildRequires : pkgconfig(32libcurl)
-BuildRequires : pkgconfig(32libsystemd)
-BuildRequires : pkgconfig(32libudev)
-BuildRequires : pkgconfig(32uuid)
 BuildRequires : pkgconfig(bluez)
 BuildRequires : pkgconfig(dbus-glib-1)
 BuildRequires : pkgconfig(gio-unix-2.0)
@@ -144,18 +123,6 @@ Requires: NetworkManager = %{version}-%{release}
 dev components for the NetworkManager package.
 
 
-%package dev32
-Summary: dev32 components for the NetworkManager package.
-Group: Default
-Requires: NetworkManager-lib32 = %{version}-%{release}
-Requires: NetworkManager-bin = %{version}-%{release}
-Requires: NetworkManager-data = %{version}-%{release}
-Requires: NetworkManager-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the NetworkManager package.
-
-
 %package doc
 Summary: doc components for the NetworkManager package.
 Group: Documentation
@@ -174,16 +141,6 @@ Requires: NetworkManager-license = %{version}-%{release}
 
 %description lib
 lib components for the NetworkManager package.
-
-
-%package lib32
-Summary: lib32 components for the NetworkManager package.
-Group: Default
-Requires: NetworkManager-data = %{version}-%{release}
-Requires: NetworkManager-license = %{version}-%{release}
-
-%description lib32
-lib32 components for the NetworkManager package.
 
 
 %package libexec
@@ -232,23 +189,20 @@ services components for the NetworkManager package.
 %setup -q -n NetworkManager-1.22.10
 cd %{_builddir}/NetworkManager-1.22.10
 %patch1 -p1
-pushd ..
-cp -a NetworkManager-1.22.10 build32
-popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1585325786
+export SOURCE_DATE_EPOCH=1600296687
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
@@ -276,76 +230,13 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
-pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%configure --disable-static --enable-ppp \
---disable-teamdctl \
---with-nmcli=yes \
---disable-json-validation \
---with-config-plugins-default=keyfile \
---with-dhclient=/usr/libexec/dhclient \
---with-session-tracking=systemd \
---with-suspend-resume=systemd \
---with-systemd-logind=yes \
---with-systemd-journal=yes \
---enable-modify-system \
---enable-polkit-agent \
---enable-polkit=yes \
---with-kernel-firmware-dir=/usr/lib/firmware \
---with-dbus-sys-dir=/usr/share/dbus-1/system.d \
---enable-wifi \
---enable-bluez5-dun \
---with-system-ca-path=/var/cache/ca-certs/anchors \
---with-iptables=/usr/bin/iptables \
---disable-ovs \
---with-modem-manager-1 \
---with-libnm-glib \
---with-iwd \
-PYTHON=/usr/bin/python3 --disable-ppp \
---disable-teamdctl \
---with-nmcli=no \
---disable-json-validation \
---with-config-plugins-default=keyfile \
---with-dhclient=/usr/bin/dhclient \
---with-session-tracking=systemd \
---with-suspend-resume=systemd \
---with-systemd-logind=yes \
---with-systemd-journal=yes \
---enable-modify-system \
---disable-polkit-agent \
---enable-polkit=disabled \
---with-kernel-firmware-dir=/usr/lib/firmware \
---with-dbus-sys-dir=/usr/share/dbus-1/system.d \
---enable-wifi \
---with-system-ca-path=/var/cache/ca-certs/anchors \
---with-iptables=/usr/bin/iptables \
---disable-bluez5-dun \
---with-nmtui=no \
---with-libpsl=no \
---disable-modem-manager \
-PYTHON=/usr/bin/python3  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}
-popd
 %install
-export SOURCE_DATE_EPOCH=1585325786
+export SOURCE_DATE_EPOCH=1600296687
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-1.22.10/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c
 cp %{_builddir}/NetworkManager-1.22.10/COPYING.GFDL %{buildroot}/usr/share/package-licenses/NetworkManager/7205ad2e7451e9c4a518d105d5144987cdaf9bfa
 cp %{_builddir}/NetworkManager-1.22.10/COPYING.LGPL %{buildroot}/usr/share/package-licenses/NetworkManager/01a6b4bf79aca9b556822601186afab86e8c4fbf
-pushd ../build32/
-%make_install32
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do ln -s $i 32$i ; done
-popd
-fi
-popd
 %make_install
 %find_lang NetworkManager
 ## Remove excluded files
@@ -372,7 +263,6 @@ popd
 %defattr(-,root,root,-)
 /usr/lib/NetworkManager/dispatcher.d/90-nm-cloud-setup.sh
 /usr/lib/NetworkManager/dispatcher.d/no-wait.d/90-nm-cloud-setup.sh
-/usr/lib32/girepository-1.0/NM-1.0.typelib
 
 %files autostart
 %defattr(-,root,root,-)
@@ -567,12 +457,6 @@ popd
 /usr/lib64/libnm.so
 /usr/lib64/pkgconfig/NetworkManager.pc
 /usr/lib64/pkgconfig/libnm.pc
-
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libnm.so
-/usr/lib32/pkgconfig/32libnm.pc
-/usr/lib32/pkgconfig/libnm.pc
 
 %files doc
 %defattr(0644,root,root,0755)
@@ -854,16 +738,6 @@ popd
 /usr/lib64/libnm.so.0
 /usr/lib64/libnm.so.0.1.0
 /usr/lib64/pppd/2.4.5/nm-pppd-plugin.so
-
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/NetworkManager/1.22.10/libnm-device-plugin-adsl.so
-/usr/lib32/NetworkManager/1.22.10/libnm-device-plugin-bluetooth.so
-/usr/lib32/NetworkManager/1.22.10/libnm-device-plugin-wifi.so
-/usr/lib32/NetworkManager/1.22.10/libnm-device-plugin-wwan.so
-/usr/lib32/NetworkManager/1.22.10/libnm-wwan.so
-/usr/lib32/libnm.so.0
-/usr/lib32/libnm.so.0.1.0
 
 %files libexec
 %defattr(-,root,root,-)

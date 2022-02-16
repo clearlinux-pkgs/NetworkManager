@@ -1,9 +1,229 @@
-===============================================
-NetworkManager-1.24.2
-Overview of changes since NetworkManager-1.24.0
-===============================================
+=============================================
+NetworkManager-1.34
+Overview of changes since NetworkManager-1.32
+=============================================
 
-This is a new stable release of NetworkManager.  Notable changes include:
+* initrd: wait for both IPv4 and IPv6 with "ip=dhcp,dhcp6"
+* core: better handle sd-resolved errors when resolving hostnames
+* nmcli: fix import WireGuard profile with DNS domain and address
+  family disabled 
+* ndisc: send router solicitations before expiry
+* policy: send earlier the ip configs to the DNS manager
+* core: support linking with LLD 13
+* wireguard: importing wg-quick configuration files with nmcli
+  no longer sets a negative, exclusive "dns-priority". This plays
+  better with common split DNS setups that use systemd-resolved.
+  Adjust the "dns-priority" to your liking after import yourself.
+* NetworkManager no longer listens for netlink events for traffic
+  control objects (qdiscs and filters).
+* core: add internal nm-priv-helper service for separating privileges
+  and have a way to drop capabilities from NetworkManager daemon.
+* bond: add support for setting queue-id of bond port.
+* dns: support configuring DNS over TLS (DoT) with systemd-resolved.
+* nmtui: add support for WireGuard profiles.
+* nmcli: add aliases `nmcli device up|down` beside connect|disconnect.
+* conscious language: Deprecate 'Device.Slaves' D-Bus property in favor of new
+  'Device.Ports' property. Depracate 'nm_device_*_get_slaves()' in favor of
+  'nm_device_get_ports()' in libnm.
+* nmcli: invoking nmcli command without arguments will now show 'default'
+  instead of null address in route4 or route6 section.
+
+The following changes were backported to 1.32.x releases between 1.32.0
+and 1.32.12 are also present in NetworkManager-1.34:
+
+- 1.32.12:
+* Fix wrong order of addresses when restarting NetworkManager.
+* Preserve the IPv6 ff00::/8 route added by kernel in the local table,
+  necessary for multicast communication.
+* Fix emitting the signal for changed metered status of devices.
+* Fix applying the ethtool autonegotiation and speed settings.
+* initrd: fix crash parsing plain '=' without key.
+* cloud-setup: use suppress_prefixlength rule to honor
+  non-default-routes in the main table.
+
+- 1.32.10:
+* core: fix the order of IPv6 addresses changing on service restart.
+* initrd: add command line option to configure link autonegotiation
+  and speed.
+* ifcfg-rh: fix crash when parsing invalid DNS address.
+* ifcfg-rh: extend ifup/ifdown scripts to work with connection profile
+  names.
+* udev: also react to "move" (and "change") udev actions in our rules.
+
+- 1.32.8:
+* firewalld: configure zones on "Reloaded" signal.
+* core: fix wrong MTU for bridge interfaces.
+* cloud-setup: fix gateway address for Aliyun cloud.
+
+- 1.32.6:
+* core: fix adding stale local routes when address changes.
+* initrd: tag generated profiles with origin in user data.
+* core: introduce "allowed-connections" option to disallow
+  profiles on a device. This allows to filter out profiles
+  that originate from initrd.
+* core: introduce "keep-configuration" device option to forcefully
+  activate a profile on start.
+* dhcp: handle filename/bootfile_name DHCP option and write it to
+  device state file for initrd/kickstart.
+* initrd: add "ib.pkey=" command line option
+
+- 1.32.4:
+* core: remove stale entries from "seen-bssids" and "timestamp"
+  files in "/var/lib/NetworkManager".
+* bond: support the peer_notif_delay option.
+* core: add ipv[46].required-timeout option to wait for IP
+  configuration while activating.
+* core: send ARP announcements when there is carrier.
+* core: start DHCPv6 when a prefix delegation is needed for shared
+  mode.
+* firewall: fix nftables backend to create "ip" table for
+  IPv4 only.
+* initrd: set required-timeout of 20 seconds for default IPv4 configuration
+  to opportunistically wait for IPv4.
+* ifcfg: log warning about invalid keys in ifcfg files.
+* ifcfg: reject non-UTF-8 from ifcfg files.
+* nmcli: show DNS SEARCH field in device information.
+* cloud-setup: add support for Aliyun cloud.
+
+- 1.32.2:
+* hostname: prefer IPv4 addresses for reverse DNS lookup.
+* dhcp: ignore unauthenticated FORCERENEW messages with
+  internal, systemd-based DHCPv4 plugin (CVE-2020-13529).
+  This plugin is not used, unless the undocumented dhcp=systemd
+  option was set.
+* cloud-setup: preserve IP addresses, routes and rules from
+  currently active connection profile.
+* Various bugfixes and performance improvements.
+
+=============================================
+NetworkManager-1.32
+Overview of changes since NetworkManager-1.30
+=============================================
+
+* Add an 'accept-all-mac-addresses' property to the ethernet setting
+  to accept frames with any MAC address (also known as promiscuous
+  mode).
+* nmcli: fix setting property aliases to empty value to reset the
+  default value.
+* BEHAVIOR CHANGE: Enforce valid lower case UUID format for the "connection.uuid"
+  by normalizing the value. This changes the UUID of existing profiles with an
+  invalid or non-normalized value. Also normalize "connection.secondaries" to only
+  contain valid and distinct UUIDs. Profiles that set "connection.master" or the
+  "parent" properties to a non-normalized UUID need adjustment. Using such
+  non-normalized UUIDs should be rare and affect few users.
+* API CHANGE: D-Bus: remove long deprecated "PropertiesChanged" signal from D-Bus
+  API. They are replaced by standard "PropertiesChanged" signal on the
+  "org.freedesktop.DBus.Properties" interface. It is not expected that anybody
+  is still using this API.
+* Now NetworkManager uses systemd-resolved API to lookup the system
+  hostname via reverse DNS. If systemd-resolved is not available, a
+  'nm-daemon-helper' binary is spawned to perform the lookup using
+  the 'dns' NSS module.
+* dhcp: honor "ID_NET_DHCP_BROADCAST" udev attribute to set the broadcast flag.
+  This allows to configure devices in udev for which DHCPOFFER messages are to be
+  broadcast.
+* firewall: add nftables firewall backend for configuring IPv4 NAT with shared
+  mode. Now two backends are supported, "iptables" and "nftables". The default
+  gets detected based on whether /usr/sbin/nft or /usr/sbin/iptables is installed,
+  with nftables preferred.
+  Please note that SELinux might prevent NetworkManager from communicating with nft.
+* ethtool: add support for pause settings.
+* Support "prohibit"/"blackhole"/"unreachable" type routing rules.
+* Support uidrange attribute for policy routing rules.
+* Now NetworkManager preserves by default the existing traffic control
+  configuration (qdiscs and filters) when activating a connection.
+* wifi/iwd: mirror NetworkManager connection profiles to iwd config files.
+* API CHANGE: vala: fix wrongly generated vapi for WireGuard API.
+* wifi: fix parsing of Microsoft Network Cost information element for
+  detecting metered networks.
+* dhcp: support option 249 (Microsoft Classless Static Route) with nettools
+  internal DHCP plugin.
+* initrd: support the "rd.net.dhcp.retry" kernel argument for controlling retry
+  and timeout to get a DHCP lease.
+* API CHANGE: hide definitions of structs for NMSetting and NMSimpleConnection from
+  public headers.
+* Major restructuring of the source code.
+* Many bugfixes and minor improvements.
+
+=============================================
+NetworkManager-1.30
+Overview of changes since NetworkManager-1.28
+=============================================
+
+* Increase timeout of NetworkManager-wait-online.service to 60 seconds.
+* Add "ipv4.dhcp-client-id=ipv6-duid" option for RFC4361.
+* The dhcpcd plugin now requires a minimum version of dhcpcd-9.3.3 with
+  the --noconfigure option. Using an older version will cause dhcpcd to
+  exit with a status code of 1.
+* Support building against musl libc.
+* Support new ethtool offload features.
+* Add support for WPA3 Enterprise Suite-B 192 bit mode.
+* Add support for handling Veth devices.
+* New hostname settings for controlling configuring the hostname from
+  reverse DNS lookup and from DHCP.
+* OVS: support configuring external-ids.
+* libnm: nm_setting_bond_add_option() no longer validates the
+  option that is set. Instead, use nm_connection_verify() to validate
+  the profile.
+* libnm: add support for reading/writing keyfile format. This required to
+  relicense previously GPL-2.0+ code as LGPL-2.1+ with the agreement of the
+  copyright holders.
+* initrd: support for rd.net.timeout.carrier option.
+* initrd: support new ip method "link6" for IPv6 link-local only.
+* ci: use ci-templates for containers on gitlab-ci.
+* ci: test build against Alpine Linux on gitlab-ci.
+* build: new configure option to set path to "polkit-agent-helper-1".
+* Many bugfixes, improvements and translation updates.
+
+=============================================
+NetworkManager-1.28
+Overview of changes since NetworkManager-1.26
+=============================================
+
+* Introduce a new "rc-manager=auto" setting and make it the default,
+  unless a different default is chosen at compile time.  This mode
+  tries to detect "systemd-resolved", "resolvconf", and "netconfig"
+  and chooses the mode that seems most suitable depending on build
+  setting and runtime detection.  "resolvconf" and "netconfig" are
+  only considered iff NetworkManager was built with the respective
+  options enabled.
+* The long deprecated D-Bus property "Ip4Address" on
+  "org.freedesktop.NetworkManager.Device" interface is now defunct and
+  always returns zero.
+* Introduce a ipv4.dhcp-reject-servers connection property that
+  specifies a list of DHCP server-ids from which offers should be
+  rejected.
+* Add a ipv4.dhcp-vendor-class-identifier connection property to send
+  a custom value for the Vendor Class Identifier DHCP option.
+* Support obtaining the system hostname through the FQDN DHCPv6
+  option.
+* dbus: don't require policykit permission for GetAppliedConnection of
+  a device.
+* When supported by kernel, use netlink to configure bridge settings
+  instead of writing to sysfs.
+* Deprecate the "active_slave" bond option which now has the same effect
+  as setting the "primary" option.
+* The initrd generator now also accepts MAC addresses to indicate
+  interfaces.
+* Add a new provider for nm-cloud-setup to support automatic network
+  configuration on Azure.
+* The initrd generator now supports creating Infiniband connections.
+* Fix running DHCPv6-PD over PPPoE.
+* Fix building NetworkManager with LTO (Link Time Optimization).
+* Fix failure activating Wi-Fi P2P connections.
+* Reformat code using spaces instead of tabs. Also, the entire C
+  source code is now formatted with "clang-format" (version 11.0).
+* Change the behavior of nm-initrd-generator so that the 'ip=off|none' kernel
+  cmdline argument actually generates a connection which disables both
+  ipv4 and ipv6. Previously the generated connection would disable ipv4
+  but ipv6 would be set to the 'auto' method.
+* Fix systemd-resolved DNS plugin to configure DefaultRoute option and to
+  only configure wildcard DNS search domain with exclusive DNS priority.
+
+=============================================
+NetworkManager-1.26
+Overview of changes since NetworkManager-1.24
+=============================================
 
 * Add a new build option 'firewalld-zone'; when enabled,
   NetworkManager installs a firewalld zone for connection sharing and
@@ -13,14 +233,35 @@ This is a new stable release of NetworkManager.  Notable changes include:
   masquerading and open needed ports for DHCP and DNS. The new option
   is useful on systems using firewalld with the nftables backend,
   where the iptables rules would not be sufficient.
+* Extend the syntax for 'match' setting properties with '|', '&', '!'
+  and '\\'.
+* Add MUD URL property for connection profiles (RFC 8520) and set it
+  for DHCP and DHCPv6 requests.
+* Expose raw LLDP message on D-Bus and the MUD usage description URL.
 * ifcfg-rh: handle "802-1x.{,phase2-}ca-path". Otherwise setting this
   property silently fails and a profile might accidentally not perform
   any authentication (CVE-2020-10754).
 * ifcfg-rh: handle 802-1x.pin properties.
-* platform: fix crash detecting device type from netlink.
-* ip-tunnel: only set cloned-mac-address for layer 2 tunnels.
-* Fixes for sanitizer build and valgrind.
-* Various other bugfixes.
+* ethernet: reset original autonegotiation/speed/duplex settings when
+  deactivating device.
+* Support ethtool coalesce and ring options.
+* Allow team connections to work without D-Bus (e.g. in the initrd).
+* Wi-Fi profiles now also autoconnect if all previous activation attempts
+  failed. This means, an initial failure to autoconnect to the network will
+  no longer block the automatism. A side effect is that existing Wi-Fi profiles
+  which previously were blocked may now start to autoconnect.
+* NetworkManager now supports "local" type routes beside "unicast".
+* Introduce new manual pages nm-settings-dbus and nm-settings-nmcli.
+* Mark externally managed devices and profiles on D-Bus.
+* Highlight externally managed devices in nmcli.
+* Add support for a number of bridge options.
+* Add match for device path, driver and kernel command line for connection
+  profiles.
+* Fix support for OVS patch interfaces.
+* Support more tc qdiscs: tbf and sfq.
+* Add new provider in nm-cloud-setup for Google Cloud Platform which
+  automatically detects and configures the host to receive traffic
+  from internal load balancers.
 
 =============================================
 NetworkManager-1.24

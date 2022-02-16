@@ -1,5 +1,3 @@
-# install NetworkManager.pc
-install -m 0644 NetworkManager.pc %{buildroot}/usr/lib64/pkgconfig/NetworkManager.pc
 # Ensure dbus activation will work without requiring enable at boot
 pushd %{buildroot}/usr/lib/systemd/system
 ln -s NetworkManager.service dbus-org.freedesktop.NetworkManager.service

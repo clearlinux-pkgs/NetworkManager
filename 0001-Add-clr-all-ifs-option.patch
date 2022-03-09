@@ -1,6 +1,6 @@
-From b8209b1d6dcbe9c80584f724c3a7c83f39c5363a Mon Sep 17 00:00:00 2001
+From 650a9dbded485975be6bea5ed8ff53109e02d7ef Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Wed, 16 Feb 2022 11:05:21 -0800
+Date: Wed, 9 Mar 2022 11:13:21 -0800
 Subject: [PATCH] Add --clr-all-ifs option
 
 It's a Clear Linux specific option used as a "marker" option to query
@@ -14,7 +14,7 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 12 insertions(+)
 
 diff --git a/src/core/main.c b/src/core/main.c
-index 7d448a5..1fed6f8 100644
+index e39a961..134b557 100644
 --- a/src/core/main.c
 +++ b/src/core/main.c
 @@ -54,6 +54,7 @@ static struct {
@@ -22,9 +22,9 @@ index 7d448a5..1fed6f8 100644
      gboolean g_fatal_warnings;
      gboolean run_from_build_dir;
 +    gboolean clr_all_ifs;
-     char *   opt_log_level;
-     char *   opt_log_domains;
-     char *   pidfile;
+     char    *opt_log_level;
+     char    *opt_log_domains;
+     char    *pidfile;
 @@ -232,6 +233,13 @@ do_early_setup(int *argc, char **argv[], NMConfigCmdLineOptions *config_cli)
                                 &global_opt.run_from_build_dir,
                                 "Run from build directory",
@@ -39,7 +39,7 @@ index 7d448a5..1fed6f8 100644
                                {"print-config",
                                 0,
                                 0,
-@@ -321,6 +329,10 @@ main(int argc, char *argv[])
+@@ -311,6 +319,10 @@ main(int argc, char *argv[])
  
      do_early_setup(&argc, &argv, config_cli);
  

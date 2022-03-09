@@ -26,6 +26,7 @@ libnm.so.0:libnm_1_30_8
 libnm.so.0:libnm_1_32_0
 libnm.so.0:libnm_1_32_4
 libnm.so.0:libnm_1_34_0
+libnm.so.0:libnm_1_36_0
 libnm.so.0:libnm_1_4_0
 libnm.so.0:libnm_1_6_0
 libnm.so.0:libnm_1_8_0
@@ -1105,6 +1106,7 @@ libnm.so.0:nm_setting_ovs_bridge_get_stp_enable
 libnm.so.0:nm_setting_ovs_bridge_get_type
 libnm.so.0:nm_setting_ovs_bridge_new
 libnm.so.0:nm_setting_ovs_dpdk_get_devargs
+libnm.so.0:nm_setting_ovs_dpdk_get_n_rxq
 libnm.so.0:nm_setting_ovs_dpdk_get_type
 libnm.so.0:nm_setting_ovs_dpdk_new
 libnm.so.0:nm_setting_ovs_external_ids_check_key

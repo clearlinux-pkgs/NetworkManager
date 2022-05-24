@@ -2,7 +2,6 @@ Configure miss: LIBAUDIT
 Configure miss: LIBTEAMDCTL
 Configure miss: QT
 Configure miss: SELINUX
-Configure miss: black
 Configure miss: dhcpcanon
 Configure miss: dhcpcd
 Configure miss: histedit.h

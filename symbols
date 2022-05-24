@@ -27,6 +27,7 @@ libnm.so.0:libnm_1_32_0
 libnm.so.0:libnm_1_32_4
 libnm.so.0:libnm_1_34_0
 libnm.so.0:libnm_1_36_0
+libnm.so.0:libnm_1_38_0
 libnm.so.0:libnm_1_4_0
 libnm.so.0:libnm_1_6_0
 libnm.so.0:libnm_1_8_0
@@ -153,6 +154,7 @@ libnm.so.0:nm_client_get_object_by_path
 libnm.so.0:nm_client_get_permission_result
 libnm.so.0:nm_client_get_permissions_state
 libnm.so.0:nm_client_get_primary_connection
+libnm.so.0:nm_client_get_radio_flags
 libnm.so.0:nm_client_get_startup
 libnm.so.0:nm_client_get_state
 libnm.so.0:nm_client_get_type
@@ -621,6 +623,7 @@ libnm.so.0:nm_metered_get_type
 libnm.so.0:nm_object_get_client
 libnm.so.0:nm_object_get_path
 libnm.so.0:nm_object_get_type
+libnm.so.0:nm_radio_flags_get_type
 libnm.so.0:nm_remote_connection_commit_changes
 libnm.so.0:nm_remote_connection_commit_changes_async
 libnm.so.0:nm_remote_connection_commit_changes_finish

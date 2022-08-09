@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.38.2
-Release  : 78
+Release  : 79
 URL      : https://download.gnome.org/sources/NetworkManager/1.38/NetworkManager-1.38.2.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.38/NetworkManager-1.38.2.tar.xz
 Summary  : Convenience library for clients of NetworkManager
@@ -129,6 +129,14 @@ Requires: NetworkManager-man = %{version}-%{release}
 doc components for the NetworkManager package.
 
 
+%package extras
+Summary: extras components for the NetworkManager package.
+Group: Default
+
+%description extras
+extras components for the NetworkManager package.
+
+
 %package lib
 Summary: lib components for the NetworkManager package.
 Group: Libraries
@@ -192,7 +200,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1655481240
+export SOURCE_DATE_EPOCH=1660064678
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -228,14 +236,14 @@ PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1655481240
+export SOURCE_DATE_EPOCH=1660064678
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
-cp %{_builddir}/NetworkManager-1.38.2/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/NetworkManager-1.38.2/COPYING.GFDL %{buildroot}/usr/share/package-licenses/NetworkManager/7205ad2e7451e9c4a518d105d5144987cdaf9bfa
-cp %{_builddir}/NetworkManager-1.38.2/COPYING.LGPL %{buildroot}/usr/share/package-licenses/NetworkManager/01a6b4bf79aca9b556822601186afab86e8c4fbf
-cp %{_builddir}/NetworkManager-1.38.2/docs/api/html/license.html %{buildroot}/usr/share/package-licenses/NetworkManager/3496ac94c57f8b332099b69a36cef6e5bb946f1d
-cp %{_builddir}/NetworkManager-1.38.2/docs/libnm/html/license.html %{buildroot}/usr/share/package-licenses/NetworkManager/5d2732db3422c09ade532cabb958237d1f350f09
+cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/NetworkManager-%{version}/COPYING.GFDL %{buildroot}/usr/share/package-licenses/NetworkManager/7205ad2e7451e9c4a518d105d5144987cdaf9bfa
+cp %{_builddir}/NetworkManager-%{version}/COPYING.LGPL %{buildroot}/usr/share/package-licenses/NetworkManager/01a6b4bf79aca9b556822601186afab86e8c4fbf
+cp %{_builddir}/NetworkManager-%{version}/docs/api/html/license.html %{buildroot}/usr/share/package-licenses/NetworkManager/3496ac94c57f8b332099b69a36cef6e5bb946f1d
+cp %{_builddir}/NetworkManager-%{version}/docs/libnm/html/license.html %{buildroot}/usr/share/package-licenses/NetworkManager/5d2732db3422c09ade532cabb958237d1f350f09
 %make_install
 %find_lang NetworkManager
 ## Remove excluded files
@@ -272,10 +280,6 @@ popd
 /usr/bin/NetworkManager
 /usr/bin/nm-online
 /usr/bin/nmcli
-/usr/bin/nmtui
-/usr/bin/nmtui-connect
-/usr/bin/nmtui-edit
-/usr/bin/nmtui-hostname
 
 %files config
 %defattr(-,root,root,-)
@@ -753,6 +757,13 @@ popd
 /usr/share/gtk-doc/html/libnm/up-insensitive.png
 /usr/share/gtk-doc/html/libnm/up.png
 /usr/share/gtk-doc/html/libnm/usage.html
+
+%files extras
+%defattr(-,root,root,-)
+/usr/bin/nmtui
+/usr/bin/nmtui-connect
+/usr/bin/nmtui-edit
+/usr/bin/nmtui-hostname
 
 %files lib
 %defattr(-,root,root,-)

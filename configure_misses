@@ -4,9 +4,9 @@ Configure miss: QT
 Configure miss: SELINUX
 Configure miss: dhcpcanon
 Configure miss: dhcpcd
+Configure miss: g++ option to enable C++11 features
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: histedit.h
-Configure miss: histedit.h presence
-Configure miss: histedit.h usability
 Configure miss: nft
 Configure miss: whether -Wall "-Wno-tautological-constant-out-of-range-compare" works as expected
 Configure miss: whether -Wparentheses-equality works as expected
@@ -17,4 +17,5 @@ Configure miss: whether pidfd_open is declared
 Configure miss: whether pidfd_send_signal is declared
 Configure miss: whether rt_sigqueueinfo is declared
 Configure miss: x86_64-generic-linux-gnu-eu-readelf
+Configure miss: x86_64-generic-linux-gnu-file
 Configure miss: x86_64-generic-linux-gnu-readelf

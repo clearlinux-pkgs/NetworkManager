@@ -28,6 +28,7 @@ libnm.so.0:libnm_1_32_4
 libnm.so.0:libnm_1_34_0
 libnm.so.0:libnm_1_36_0
 libnm.so.0:libnm_1_38_0
+libnm.so.0:libnm_1_40_0
 libnm.so.0:libnm_1_4_0
 libnm.so.0:libnm_1_6_0
 libnm.so.0:libnm_1_8_0
@@ -188,6 +189,7 @@ libnm.so.0:nm_client_wireless_set_enabled
 libnm.so.0:nm_client_wwan_get_enabled
 libnm.so.0:nm_client_wwan_hardware_get_enabled
 libnm.so.0:nm_client_wwan_set_enabled
+libnm.so.0:nm_conn_wireguard_import
 libnm.so.0:nm_connection_add_setting
 libnm.so.0:nm_connection_clear_secrets
 libnm.so.0:nm_connection_clear_secrets_with_flags
@@ -620,6 +622,7 @@ libnm.so.0:nm_manager_error_get_type
 libnm.so.0:nm_manager_error_quark
 libnm.so.0:nm_manager_reload_flags_get_type
 libnm.so.0:nm_metered_get_type
+libnm.so.0:nm_mptcp_flags_get_type
 libnm.so.0:nm_object_get_client
 libnm.so.0:nm_object_get_path
 libnm.so.0:nm_object_get_type
@@ -871,6 +874,7 @@ libnm.so.0:nm_setting_connection_get_stable_id
 libnm.so.0:nm_setting_connection_get_timestamp
 libnm.so.0:nm_setting_connection_get_type
 libnm.so.0:nm_setting_connection_get_uuid
+libnm.so.0:nm_setting_connection_get_wait_activation_delay
 libnm.so.0:nm_setting_connection_get_wait_device_timeout
 libnm.so.0:nm_setting_connection_get_zone
 libnm.so.0:nm_setting_connection_is_slave_type
@@ -959,10 +963,12 @@ libnm.so.0:nm_setting_ip4_config_get_dhcp_fqdn
 libnm.so.0:nm_setting_ip4_config_get_dhcp_vendor_class_identifier
 libnm.so.0:nm_setting_ip4_config_get_type
 libnm.so.0:nm_setting_ip4_config_new
+libnm.so.0:nm_setting_ip4_link_local_get_type
 libnm.so.0:nm_setting_ip6_config_addr_gen_mode_get_type
 libnm.so.0:nm_setting_ip6_config_get_addr_gen_mode
 libnm.so.0:nm_setting_ip6_config_get_dhcp_duid
 libnm.so.0:nm_setting_ip6_config_get_ip6_privacy
+libnm.so.0:nm_setting_ip6_config_get_mtu
 libnm.so.0:nm_setting_ip6_config_get_ra_timeout
 libnm.so.0:nm_setting_ip6_config_get_token
 libnm.so.0:nm_setting_ip6_config_get_type

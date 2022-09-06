@@ -1,3 +1,5 @@
+Configure miss: 32-bit host C ABI
+Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: LIBAUDIT
 Configure miss: LIBTEAMDCTL
 Configure miss: QT
@@ -8,6 +10,7 @@ Configure miss: g++ option to enable C++11 features
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: histedit.h
 Configure miss: nft
+Configure miss: whether -Wall ""-Wno-gnu-variable-sized-type-not-at-end"" works as expected
 Configure miss: whether -Wall "-Wno-tautological-constant-out-of-range-compare" works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected

@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.40.0
-Release  : 81
+Release  : 82
 URL      : https://download.gnome.org/sources/NetworkManager/1.40/NetworkManager-1.40.0.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.40/NetworkManager-1.40.0.tar.xz
 Summary  : Convenience library for clients of NetworkManager

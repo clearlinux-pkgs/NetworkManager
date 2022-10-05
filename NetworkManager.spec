@@ -4,7 +4,7 @@
 #
 Name     : NetworkManager
 Version  : 1.40.0
-Release  : 84
+Release  : 85
 URL      : https://download.gnome.org/sources/NetworkManager/1.40/NetworkManager-1.40.0.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.40/NetworkManager-1.40.0.tar.xz
 Summary  : Convenience library for clients of NetworkManager
@@ -199,15 +199,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664161029
+export SOURCE_DATE_EPOCH=1664928610
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -235,7 +235,7 @@ PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1664161029
+export SOURCE_DATE_EPOCH=1664928610
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c || :

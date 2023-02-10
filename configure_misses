@@ -11,7 +11,11 @@ Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: histedit.h
 Configure miss: nft
 Configure miss: whether -Wall ""-Wno-gnu-variable-sized-type-not-at-end"" works as expected
+Configure miss: whether -Wall "-Wno-gnu-variable-sized-type-not-at-end" works as expected
 Configure miss: whether -Wall "-Wno-tautological-constant-out-of-range-compare" works as expected
+Configure miss: whether -Wall "-Wparentheses-equality" works as expected
+Configure miss: whether -Wall "-Wtypedef-redefinition" works as expected
+Configure miss: whether -Wall "-Wunknown-attributes" works as expected
 Configure miss: whether -Wparentheses-equality works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wunknown-attributes works as expected

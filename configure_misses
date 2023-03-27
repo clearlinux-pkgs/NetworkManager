@@ -2,6 +2,7 @@ Configure miss: 32-bit host C ABI
 Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: LIBAUDIT
 Configure miss: LIBTEAMDCTL
+Configure miss: MOBILE_BROADBAND_PROVIDER_INFO
 Configure miss: QT
 Configure miss: SELINUX
 Configure miss: dhcpcanon

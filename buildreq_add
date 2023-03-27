@@ -20,3 +20,5 @@ newt-dev
 jansson-dev
 buildreq-kde
 ppp-dev
+bluez-dev
+curl-dev

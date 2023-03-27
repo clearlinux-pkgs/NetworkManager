@@ -1,3 +1,6 @@
-1.42.2
+1.42.4
 dnsmasq
 elfutils
+gnutls-dev
+gtk-doc
+gtk-doc-dev

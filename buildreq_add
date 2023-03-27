@@ -22,3 +22,5 @@ buildreq-kde
 ppp-dev
 bluez-dev
 curl-dev
+mobile-broadband-provider-info
+systemd-dev

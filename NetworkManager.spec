@@ -5,7 +5,7 @@
 #
 Name     : NetworkManager
 Version  : 1.42.4
-Release  : 95
+Release  : 96
 URL      : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.4.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.4.tar.xz
 Summary  : Convenience library for clients of NetworkManager
@@ -45,6 +45,7 @@ BuildRequires : libndp-dev
 BuildRequires : libnl-dev
 BuildRequires : libsoup-dev
 BuildRequires : linux-firmware-wifi
+BuildRequires : mobile-broadband-provider-info
 BuildRequires : ncurses-dev
 BuildRequires : newt-dev
 BuildRequires : nss-dev
@@ -52,6 +53,7 @@ BuildRequires : pkgconfig(dbus-glib-1)
 BuildRequires : ppp-dev
 BuildRequires : pygobject
 BuildRequires : readline-dev
+BuildRequires : systemd-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -192,7 +194,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1679941020
+export SOURCE_DATE_EPOCH=1679941817
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -228,7 +230,7 @@ PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1679941020
+export SOURCE_DATE_EPOCH=1679941817
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c || :

@@ -4,10 +4,10 @@
 # Using build pattern: configure
 #
 Name     : NetworkManager
-Version  : 1.42.4
-Release  : 97
-URL      : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.4.tar.xz
-Source0  : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.4.tar.xz
+Version  : 1.42.6
+Release  : 98
+URL      : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.6.tar.xz
+Source0  : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.6.tar.xz
 Summary  : Convenience library for clients of NetworkManager
 Group    : Development/Tools
 License  : GFDL-1.1 GPL-2.0 LGPL-2.1
@@ -36,7 +36,6 @@ BuildRequires : dnsmasq
 BuildRequires : docbook-xml
 BuildRequires : elfutils
 BuildRequires : gettext
-BuildRequires : gnutls-dev
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
@@ -194,14 +193,15 @@ man components for the NetworkManager package.
 Summary: services components for the NetworkManager package.
 Group: Systemd services
 Requires: /usr/bin/busctl
+Requires: systemd
 
 %description services
 services components for the NetworkManager package.
 
 
 %prep
-%setup -q -n NetworkManager-1.42.4
-cd %{_builddir}/NetworkManager-1.42.4
+%setup -q -n NetworkManager-1.42.6
+cd %{_builddir}/NetworkManager-1.42.6
 %patch1 -p1
 
 %build
@@ -209,7 +209,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680041145
+export SOURCE_DATE_EPOCH=1682360796
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -245,7 +245,7 @@ PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1680041145
+export SOURCE_DATE_EPOCH=1682360796
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c || :
@@ -484,7 +484,7 @@ popd
 
 %files doc
 %defattr(0644,root,root,0755)
-%doc /usr/share/doc/NetworkManager/*
+/usr/share/doc/NetworkManager/*
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager-dispatcher.html
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager-wait-online.service.html
 /usr/share/gtk-doc/html/NetworkManager/NetworkManager.conf.html
@@ -788,12 +788,12 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/NetworkManager/1.42.4/libnm-device-plugin-adsl.so
-/usr/lib64/NetworkManager/1.42.4/libnm-device-plugin-bluetooth.so
-/usr/lib64/NetworkManager/1.42.4/libnm-device-plugin-wifi.so
-/usr/lib64/NetworkManager/1.42.4/libnm-device-plugin-wwan.so
-/usr/lib64/NetworkManager/1.42.4/libnm-ppp-plugin.so
-/usr/lib64/NetworkManager/1.42.4/libnm-wwan.so
+/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-adsl.so
+/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-bluetooth.so
+/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-wifi.so
+/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-wwan.so
+/usr/lib64/NetworkManager/1.42.6/libnm-ppp-plugin.so
+/usr/lib64/NetworkManager/1.42.6/libnm-wwan.so
 /usr/lib64/libnm.so.0
 /usr/lib64/libnm.so.0.1.0
 /usr/lib64/pppd/2.4.5/nm-pppd-plugin.so

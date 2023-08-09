@@ -4,10 +4,10 @@
 # Using build pattern: configure
 #
 Name     : NetworkManager
-Version  : 1.42.6
-Release  : 98
-URL      : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.6.tar.xz
-Source0  : https://download.gnome.org/sources/NetworkManager/1.42/NetworkManager-1.42.6.tar.xz
+Version  : 1.44.0
+Release  : 99
+URL      : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.0.tar.xz
+Source0  : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.0.tar.xz
 Summary  : Convenience library for clients of NetworkManager
 Group    : Development/Tools
 License  : GFDL-1.1 GPL-2.0 LGPL-2.1
@@ -62,6 +62,7 @@ BuildRequires : pkgconfig(libsystemd)
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(mobile-broadband-provider-info)
 BuildRequires : pkgconfig(nss)
+BuildRequires : pkgconfig(pppd)
 BuildRequires : pkgconfig(systemd)
 BuildRequires : pkgconfig(uuid)
 BuildRequires : ppp-dev
@@ -200,24 +201,27 @@ services components for the NetworkManager package.
 
 
 %prep
-%setup -q -n NetworkManager-1.42.6
-cd %{_builddir}/NetworkManager-1.42.6
-%patch1 -p1
+%setup -q -n NetworkManager-1.44.0
+cd %{_builddir}/NetworkManager-1.44.0
+%patch -P 1 -p1
+pushd ..
+cp -a NetworkManager-1.44.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682360796
+export SOURCE_DATE_EPOCH=1691605528
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -244,13 +248,49 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-
 PYTHON=/usr/bin/python3 --with-nmtui=yes
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+%configure --disable-static --enable-ppp \
+--disable-teamdctl \
+--with-nmcli=yes \
+--disable-json-validation \
+--with-config-plugins-default=keyfile \
+--with-dhclient=/usr/libexec/dhclient \
+--with-session-tracking=systemd \
+--with-suspend-resume=systemd \
+--with-systemd-logind=yes \
+--with-systemd-journal=yes \
+--enable-modify-system \
+--enable-polkit-agent \
+--enable-polkit=yes \
+--with-kernel-firmware-dir=/usr/lib/firmware \
+--with-dbus-sys-dir=/usr/share/dbus-1/system.d \
+--enable-wifi \
+--enable-bluez5-dun \
+--with-system-ca-path=/var/cache/ca-certs/anchors \
+--with-iptables=/usr/bin/iptables \
+--disable-ovs \
+--with-modem-manager-1 \
+--with-libnm-glib \
+--with-iwd \
+PYTHON=/usr/bin/python3
+make  %{?_smp_mflags}
+popd
 %install
-export SOURCE_DATE_EPOCH=1682360796
+export SOURCE_DATE_EPOCH=1691605528
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c || :
 cp %{_builddir}/NetworkManager-%{version}/COPYING.GFDL %{buildroot}/usr/share/package-licenses/NetworkManager/7205ad2e7451e9c4a518d105d5144987cdaf9bfa || :
 cp %{_builddir}/NetworkManager-%{version}/COPYING.LGPL %{buildroot}/usr/share/package-licenses/NetworkManager/01a6b4bf79aca9b556822601186afab86e8c4fbf || :
+pushd ../buildavx2/
+%make_install_v3
+popd
 %make_install
 %find_lang NetworkManager
 ## Remove excluded files
@@ -270,11 +310,13 @@ pushd %{buildroot}/usr/lib/systemd/system/network-online.target.wants
 ln -sf ../NetworkManager-wait-online.service NetworkManager-wait-online.service
 popd
 ## install_append end
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 /usr/lib/NetworkManager/dispatcher.d/90-nm-cloud-setup.sh
 /usr/lib/NetworkManager/dispatcher.d/no-wait.d/90-nm-cloud-setup.sh
+/usr/lib/NetworkManager/dispatcher.d/pre-up.d/90-nm-cloud-setup.sh
 /usr/lib/firewalld/zones/nm-shared.xml
 
 %files autostart
@@ -284,6 +326,9 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/NetworkManager
+/V3/usr/bin/nm-online
+/V3/usr/bin/nmcli
 /usr/bin/NetworkManager
 /usr/bin/nm-online
 /usr/bin/nmcli
@@ -431,6 +476,7 @@ popd
 /usr/include/libnm/nm-setting-ip-tunnel.h
 /usr/include/libnm/nm-setting-ip4-config.h
 /usr/include/libnm/nm-setting-ip6-config.h
+/usr/include/libnm/nm-setting-link.h
 /usr/include/libnm/nm-setting-loopback.h
 /usr/include/libnm/nm-setting-macsec.h
 /usr/include/libnm/nm-setting-macvlan.h
@@ -606,6 +652,7 @@ popd
 /usr/share/gtk-doc/html/NetworkManager/settings-ip-tunnel.html
 /usr/share/gtk-doc/html/NetworkManager/settings-ipv4.html
 /usr/share/gtk-doc/html/NetworkManager/settings-ipv6.html
+/usr/share/gtk-doc/html/NetworkManager/settings-link.html
 /usr/share/gtk-doc/html/NetworkManager/settings-loopback.html
 /usr/share/gtk-doc/html/NetworkManager/settings-macsec.html
 /usr/share/gtk-doc/html/NetworkManager/settings-macvlan.html
@@ -704,6 +751,7 @@ popd
 /usr/share/gtk-doc/html/libnm/NMSettingIPConfig.html
 /usr/share/gtk-doc/html/libnm/NMSettingIPTunnel.html
 /usr/share/gtk-doc/html/libnm/NMSettingInfiniband.html
+/usr/share/gtk-doc/html/libnm/NMSettingLink.html
 /usr/share/gtk-doc/html/libnm/NMSettingLoopback.html
 /usr/share/gtk-doc/html/libnm/NMSettingMacsec.html
 /usr/share/gtk-doc/html/libnm/NMSettingMacvlan.html
@@ -781,6 +829,7 @@ popd
 
 %files extras
 %defattr(-,root,root,-)
+/V3/usr/bin/nmtui
 /usr/bin/nmtui
 /usr/bin/nmtui-connect
 /usr/bin/nmtui-edit
@@ -788,18 +837,32 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-adsl.so
-/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-bluetooth.so
-/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-wifi.so
-/usr/lib64/NetworkManager/1.42.6/libnm-device-plugin-wwan.so
-/usr/lib64/NetworkManager/1.42.6/libnm-ppp-plugin.so
-/usr/lib64/NetworkManager/1.42.6/libnm-wwan.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-adsl.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-bluetooth.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wifi.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wwan.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-ppp-plugin.so
+/V3/usr/lib64/NetworkManager/1.44.0/libnm-wwan.so
+/V3/usr/lib64/libnm.so.0.1.0
+/V3/usr/lib64/pppd/2.5.0/nm-pppd-plugin.so
+/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-adsl.so
+/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-bluetooth.so
+/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wifi.so
+/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wwan.so
+/usr/lib64/NetworkManager/1.44.0/libnm-ppp-plugin.so
+/usr/lib64/NetworkManager/1.44.0/libnm-wwan.so
 /usr/lib64/libnm.so.0
 /usr/lib64/libnm.so.0.1.0
-/usr/lib64/pppd/2.4.5/nm-pppd-plugin.so
+/usr/lib64/pppd/2.5.0/nm-pppd-plugin.so
 
 %files libexec
 %defattr(-,root,root,-)
+/V3/usr/libexec/nm-cloud-setup
+/V3/usr/libexec/nm-daemon-helper
+/V3/usr/libexec/nm-dhcp-helper
+/V3/usr/libexec/nm-dispatcher
+/V3/usr/libexec/nm-initrd-generator
+/V3/usr/libexec/nm-priv-helper
 /usr/libexec/nm-cloud-setup
 /usr/libexec/nm-daemon-helper
 /usr/libexec/nm-dhcp-helper

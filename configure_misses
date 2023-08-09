@@ -1,28 +1,58 @@
 Configure miss: 32-bit host C ABI
+Configure miss: 32-bit host C ABI
+Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: LIBAUDIT
+Configure miss: LIBAUDIT
+Configure miss: LIBTEAMDCTL
 Configure miss: LIBTEAMDCTL
 Configure miss: QT
+Configure miss: QT
+Configure miss: SELINUX
 Configure miss: SELINUX
 Configure miss: dhcpcanon
+Configure miss: dhcpcanon
+Configure miss: dhcpcd
 Configure miss: dhcpcd
 Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: histedit.h
+Configure miss: histedit.h
+Configure miss: modprobe
+Configure miss: modprobe
+Configure miss: nft
 Configure miss: nft
 Configure miss: whether -Wall ""-Wno-gnu-variable-sized-type-not-at-end"" works as expected
+Configure miss: whether -Wall ""-Wno-gnu-variable-sized-type-not-at-end"" works as expected
+Configure miss: whether -Wall "-Wno-gnu-variable-sized-type-not-at-end" works as expected
 Configure miss: whether -Wall "-Wno-gnu-variable-sized-type-not-at-end" works as expected
 Configure miss: whether -Wall "-Wno-tautological-constant-out-of-range-compare" works as expected
+Configure miss: whether -Wall "-Wno-tautological-constant-out-of-range-compare" works as expected
+Configure miss: whether -Wall "-Wparentheses-equality" works as expected
 Configure miss: whether -Wall "-Wparentheses-equality" works as expected
 Configure miss: whether -Wall "-Wtypedef-redefinition" works as expected
+Configure miss: whether -Wall "-Wtypedef-redefinition" works as expected
+Configure miss: whether -Wall "-Wunknown-attributes" works as expected
 Configure miss: whether -Wall "-Wunknown-attributes" works as expected
 Configure miss: whether -Wparentheses-equality works as expected
+Configure miss: whether -Wparentheses-equality works as expected
+Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wtypedef-redefinition works as expected
 Configure miss: whether -Wunknown-attributes works as expected
+Configure miss: whether -Wunknown-attributes works as expected
+Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether -Wunknown-warning-option works as expected
 Configure miss: whether pidfd_open is declared
+Configure miss: whether pidfd_open is declared
+Configure miss: whether pidfd_send_signal is declared
 Configure miss: whether pidfd_send_signal is declared
 Configure miss: whether rt_sigqueueinfo is declared
+Configure miss: whether rt_sigqueueinfo is declared
+Configure miss: x86_64-generic-linux-gnu-eu-readelf
 Configure miss: x86_64-generic-linux-gnu-eu-readelf
 Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-readelf
 Configure miss: x86_64-generic-linux-gnu-readelf

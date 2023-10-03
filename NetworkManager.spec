@@ -4,10 +4,10 @@
 # Using build pattern: configure
 #
 Name     : NetworkManager
-Version  : 1.44.0
-Release  : 99
-URL      : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.0.tar.xz
-Source0  : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.0.tar.xz
+Version  : 1.44.2
+Release  : 100
+URL      : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.2.tar.xz
+Source0  : https://download.gnome.org/sources/NetworkManager/1.44/NetworkManager-1.44.2.tar.xz
 Summary  : Convenience library for clients of NetworkManager
 Group    : Development/Tools
 License  : GFDL-1.1 GPL-2.0 LGPL-2.1
@@ -201,11 +201,11 @@ services components for the NetworkManager package.
 
 
 %prep
-%setup -q -n NetworkManager-1.44.0
-cd %{_builddir}/NetworkManager-1.44.0
+%setup -q -n NetworkManager-1.44.2
+cd %{_builddir}/NetworkManager-1.44.2
 %patch -P 1 -p1
 pushd ..
-cp -a NetworkManager-1.44.0 buildavx2
+cp -a NetworkManager-1.44.2 buildavx2
 popd
 
 %build
@@ -213,15 +213,21 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1691605528
+export SOURCE_DATE_EPOCH=1696369182
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -250,11 +256,11 @@ make  %{?_smp_mflags}
 
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
-export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
-export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
-export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -m64 -march=x86-64-v3 "
+LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
 %configure --disable-static --enable-ppp \
 --disable-teamdctl \
 --with-nmcli=yes \
@@ -282,7 +288,21 @@ PYTHON=/usr/bin/python3
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1691605528
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -Os -fdata-sections -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
+export SOURCE_DATE_EPOCH=1696369182
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/NetworkManager
 cp %{_builddir}/NetworkManager-%{version}/COPYING %{buildroot}/usr/share/package-licenses/NetworkManager/4cc77b90af91e615a64ae04893fdffa7939db84c || :
@@ -837,20 +857,20 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-adsl.so
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-bluetooth.so
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wifi.so
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wwan.so
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-ppp-plugin.so
-/V3/usr/lib64/NetworkManager/1.44.0/libnm-wwan.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-adsl.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-bluetooth.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-wifi.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-wwan.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-ppp-plugin.so
+/V3/usr/lib64/NetworkManager/1.44.2/libnm-wwan.so
 /V3/usr/lib64/libnm.so.0.1.0
 /V3/usr/lib64/pppd/2.5.0/nm-pppd-plugin.so
-/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-adsl.so
-/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-bluetooth.so
-/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wifi.so
-/usr/lib64/NetworkManager/1.44.0/libnm-device-plugin-wwan.so
-/usr/lib64/NetworkManager/1.44.0/libnm-ppp-plugin.so
-/usr/lib64/NetworkManager/1.44.0/libnm-wwan.so
+/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-adsl.so
+/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-bluetooth.so
+/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-wifi.so
+/usr/lib64/NetworkManager/1.44.2/libnm-device-plugin-wwan.so
+/usr/lib64/NetworkManager/1.44.2/libnm-ppp-plugin.so
+/usr/lib64/NetworkManager/1.44.2/libnm-wwan.so
 /usr/lib64/libnm.so.0
 /usr/lib64/libnm.so.0.1.0
 /usr/lib64/pppd/2.5.0/nm-pppd-plugin.so

@@ -12,7 +12,6 @@ readline-dev
 dbus-glib-dev
 pygobject
 libsoup-dev
-dhcp
 jansson-dev
 linux-firmware-wifi
 ModemManager-dev

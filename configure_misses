@@ -2,14 +2,10 @@ Configure miss: 32-bit host C ABI
 Configure miss: 32-bit host C ABI
 Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: CFLocaleCopyPreferredLanguages
-Configure miss: LIBAUDIT
-Configure miss: LIBAUDIT
-Configure miss: LIBTEAMDCTL
-Configure miss: LIBTEAMDCTL
-Configure miss: QT
-Configure miss: QT
-Configure miss: SELINUX
-Configure miss: SELINUX
+Configure miss: QtCore >= 4 QtDBus QtNetwork
+Configure miss: QtCore >= 4 QtDBus QtNetwork
+Configure miss: audit
+Configure miss: audit
 Configure miss: dhcpcanon
 Configure miss: dhcpcanon
 Configure miss: dhcpcd
@@ -20,6 +16,10 @@ Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: histedit.h
 Configure miss: histedit.h
+Configure miss: libselinux
+Configure miss: libselinux
+Configure miss: libteamdctl >= 1.9
+Configure miss: libteamdctl >= 1.9
 Configure miss: modprobe
 Configure miss: modprobe
 Configure miss: nft

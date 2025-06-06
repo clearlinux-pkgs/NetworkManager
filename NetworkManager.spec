@@ -7,7 +7,7 @@
 #
 Name     : NetworkManager
 Version  : 1.50.0
-Release  : 103
+Release  : 104
 URL      : https://download.gnome.org/sources/NetworkManager/1.50/NetworkManager-1.50.0.tar.xz
 Source0  : https://download.gnome.org/sources/NetworkManager/1.50/NetworkManager-1.50.0.tar.xz
 Summary  : Network connection manager and user applications
@@ -201,7 +201,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1749231888
+export SOURCE_DATE_EPOCH=1749240815
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -294,6 +294,7 @@ mkdir -p %{buildroot}/usr/lib/systemd/system/network-online.target.wants
 pushd %{buildroot}/usr/lib/systemd/system/network-online.target.wants
 ln -sf ../NetworkManager-wait-online.service NetworkManager-wait-online.service
 popd
+mv %{buildroot}/usr/sbin/NetworkManager %{buildroot}/usr/bin/NetworkManager
 ## install_append end
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
@@ -314,9 +315,9 @@ popd
 /V3/usr/bin/NetworkManager
 /V3/usr/bin/nm-online
 /V3/usr/bin/nmcli
+/usr/bin/NetworkManager
 /usr/bin/nm-online
 /usr/bin/nmcli
-/usr/sbin/NetworkManager
 
 %files config
 %defattr(-,root,root,-)

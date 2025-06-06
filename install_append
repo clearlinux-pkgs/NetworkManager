@@ -11,3 +11,4 @@ mkdir -p %{buildroot}/usr/lib/systemd/system/network-online.target.wants
 pushd %{buildroot}/usr/lib/systemd/system/network-online.target.wants
 ln -sf ../NetworkManager-wait-online.service NetworkManager-wait-online.service
 popd
+mv %{buildroot}/usr/sbin/NetworkManager %{buildroot}/usr/bin/NetworkManager

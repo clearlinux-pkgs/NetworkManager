@@ -33,3 +33,4 @@ libelogind
 QtDBus
 QtNetwork
 32systemd
+libsystemd-login
